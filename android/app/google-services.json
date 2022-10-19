@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "762727701986",
+    "project_id": "prefer-f2fad",
+    "storage_bucket": "prefer-f2fad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762727701986:android:56f95ad7bcf777f16bedbb",
+        "android_client_info": {
+          "package_name": "com.shosha.prefer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762727701986-ouot8m6j4cmk9var1rk1v0pt8cim2qpv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWzkoVQl3ysax4v1BWMvMFpeN7pHi2BIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762727701986-ouot8m6j4cmk9var1rk1v0pt8cim2qpv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "762727701986-qeoukj5sacee2k7700pg54dsm6d68l9h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.helpMe"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
