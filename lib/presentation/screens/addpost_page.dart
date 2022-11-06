@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Prefer/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:Prefer/business_logic/cubit/posts_cubit.dart';
 import 'package:Prefer/constants/my_colors.dart';
@@ -44,7 +45,9 @@ class _AddPostState extends State<AddPost> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           duration: const Duration(seconds: 3),
-          content: Text("Choose 2,3 or 4 photos"),
+          content: Text(
+            AppLocalizations.of(context)!.translate("Choose 2,3 or 4 photos"),
+          ),
           backgroundColor: Colors.grey.withOpacity(0.5),
         ),
       );
@@ -64,7 +67,8 @@ class _AddPostState extends State<AddPost> {
           Padding(
             padding: const EdgeInsets.only(left: 10, bottom: 5),
             child: Text(
-              "Describe your case and let people help you!",
+              AppLocalizations.of(context)!
+                  .translate("Describe your case and let people help you!"),
               style: TextStyle(
                   color: globals.theme_mode == ThemeMode.dark
                       ? Colors.white
@@ -117,7 +121,9 @@ class _AddPostState extends State<AddPost> {
               Padding(
                 padding: const EdgeInsets.only(left: 10, bottom: 5),
                 child: Text(
-                  "Upload Your Photos (min:2, max:4)",
+                  AppLocalizations.of(context)!.translate(
+                    "Upload Your Photos (min:2, max:4)",
+                  ),
                   style: TextStyle(
                       color: globals.theme_mode == ThemeMode.dark
                           ? Colors.white
@@ -134,7 +140,9 @@ class _AddPostState extends State<AddPost> {
                     });
                   },
                   child: Text(
-                    "Clear",
+                    AppLocalizations.of(context)!.translate(
+                      "Clear",
+                    ),
                     style: TextStyle(color: MyColors.myRed, fontSize: 13),
                   ),
                 ),
@@ -282,7 +290,9 @@ class _AddPostState extends State<AddPost> {
           Padding(
             padding: const EdgeInsets.only(left: 10, bottom: 5),
             child: Text(
-              "Post period in hours (min:1, max:24)",
+              AppLocalizations.of(context)!.translate(
+                "Post period in hours (min:1, max:24)",
+              ),
               style: TextStyle(
                   color: globals.theme_mode == ThemeMode.dark
                       ? Colors.white
@@ -320,7 +330,10 @@ class _AddPostState extends State<AddPost> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       duration: const Duration(seconds: 3),
-                      content: Text("Choose 2,3 or 4 photos"),
+                      content: Text(
+                        AppLocalizations.of(context)!
+                            .translate("Choose 2,3 or 4 photos"),
+                      ),
                       backgroundColor: Colors.grey.withOpacity(0.5),
                     ),
                   );
@@ -376,7 +389,10 @@ class _AddPostState extends State<AddPost> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 duration: const Duration(seconds: 3),
-                content: Text("Error occured while uploading photos"),
+                content: Text(
+                  AppLocalizations.of(context)!
+                      .translate("Error occured while uploading photos"),
+                ),
                 backgroundColor: Colors.grey.withOpacity(0.5),
               ),
             );
@@ -387,7 +403,10 @@ class _AddPostState extends State<AddPost> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 duration: const Duration(seconds: 3),
-                content: Text("Post uploaded Successfully"),
+                content: Text(
+                  AppLocalizations.of(context)!
+                      .translate("Post uploaded Successfully"),
+                ),
                 backgroundColor: Colors.grey.withOpacity(0.5),
               ),
             );
@@ -396,7 +415,8 @@ class _AddPostState extends State<AddPost> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 duration: const Duration(seconds: 3),
-                content: Text("Error occured while uploading your post"),
+                content: Text(AppLocalizations.of(context)!
+                    .translate("Error occured while uploading your post")),
                 backgroundColor: Colors.grey.withOpacity(0.5),
               ),
             );
@@ -443,7 +463,7 @@ class _AddPostState extends State<AddPost> {
             ? Colors.black
             : MyColors.myRed,
         title: Text(
-          "Add Post",
+          AppLocalizations.of(context)!.translate("Add Post"),
           style: TextStyle(
               color: globals.theme_mode == ThemeMode.dark
                   ? Colors.white

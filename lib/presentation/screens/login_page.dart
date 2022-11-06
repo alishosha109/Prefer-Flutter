@@ -1,3 +1,4 @@
+import 'package:Prefer/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -47,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                       left: MediaQuery.of(context).size.width * 0.075,
                       bottom: MediaQuery.of(context).size.height * 0.03,
                       child: Text(
-                        'Login',
+                        AppLocalizations.of(context)!.translate('Login'),
                         style: TextStyle(
                             fontFamily: "Montserrat",
                             fontWeight: FontWeight.w600,
@@ -74,9 +75,11 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Username can\'t be empty';
+                      return AppLocalizations.of(context)!
+                          .translate('Username can\'t be empty');
                     } else if (value.length < 8) {
-                      return 'Username must be more than 8 characters';
+                      return AppLocalizations.of(context)!
+                          .translate('Username must be more than 8 characters');
                     }
                     return null;
                   },
@@ -84,7 +87,8 @@ class _LoginPageState extends State<LoginPage> {
                       enabledBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(width: 1, color: Colors.black)),
-                      hintText: "Username",
+                      hintText:
+                          AppLocalizations.of(context)!.translate("Username"),
                       hintStyle: TextStyle(fontSize: 14, color: Colors.black),
                       prefixIcon: Icon(
                         Icons.person,
@@ -101,9 +105,11 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Passowrd can\'t be empty';
+                      return AppLocalizations.of(context)!
+                          .translate('Passowrd can\'t be empty');
                     } else if (value.length < 8) {
-                      return 'Password must be more than 8 characters';
+                      return AppLocalizations.of(context)!
+                          .translate('Password must be more than 8 characters');
                     }
                     pass1 = value;
 
@@ -113,7 +119,8 @@ class _LoginPageState extends State<LoginPage> {
                       enabledBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(width: 1, color: Colors.black)),
-                      hintText: "Password",
+                      hintText:
+                          AppLocalizations.of(context)!.translate("Password"),
                       suffixIcon: show_pass == true
                           ? InkWell(
                               onTap: () {
@@ -173,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(50.0)),
                           child: Center(
                               child: Text(
-                            'Login',
+                            AppLocalizations.of(context)!.translate('Login'),
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
@@ -192,7 +199,8 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.of(context).pushReplacementNamed(SignUpScreen);
                   },
                   child: Text(
-                    'Create New Account',
+                    AppLocalizations.of(context)!
+                        .translate('Create New Account'),
                     style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w500,

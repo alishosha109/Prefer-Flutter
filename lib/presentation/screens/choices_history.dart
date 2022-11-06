@@ -1,3 +1,4 @@
+import 'package:Prefer/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:Prefer/constants/strings.dart';
@@ -98,7 +99,7 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                   height: MediaQuery.of(context).size.height * 0.15,
                 ),
                 Text(
-                  "No Choice History",
+                  AppLocalizations.of(context)!.translate("No Choice History"),
                   style: TextStyle(
                     color: globals.theme_mode == ThemeMode.dark
                         ? Colors.white
@@ -864,7 +865,8 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           duration: const Duration(seconds: 1),
-                          content: Text("Loading more posts"),
+                          content: Text(AppLocalizations.of(context)!
+                              .translate("Loading more posts")),
                           backgroundColor: Colors.grey.withOpacity(0.5),
                         ),
                       );
@@ -1000,8 +1002,8 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
           backgroundColor: globals.theme_mode == ThemeMode.dark
               ? Colors.black
               : MyColors.myRed,
-          title: const Text(
-            "Choices History",
+          title: Text(
+            AppLocalizations.of(context)!.translate("Choices History"),
             style: TextStyle(
               // fontFamily: 'mad',
               fontSize: 20,

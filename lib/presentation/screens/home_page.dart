@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
             SnackBar(
               duration: const Duration(seconds: 1),
               content: Text(
-                "Reported Succesfully",
+                AppLocalizations.of(context)!.translate("Reported Succesfully"),
                 style: TextStyle(color: Colors.black),
               ),
               backgroundColor: Colors.grey.withOpacity(0.5),
@@ -104,8 +104,9 @@ class _HomePageState extends State<HomePage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               duration: const Duration(seconds: 1),
-              content:
-                  Text("Error Occured", style: TextStyle(color: Colors.black)),
+              content: Text(
+                  AppLocalizations.of(context)!.translate("Error Occured"),
+                  style: TextStyle(color: Colors.black)),
               backgroundColor: Colors.grey.withOpacity(0.5),
             ),
           );
@@ -137,7 +138,8 @@ class _HomePageState extends State<HomePage> {
               height: MediaQuery.of(context).size.height * 0.15,
             ),
             Text(
-              "No Live Posts, Check Later",
+              AppLocalizations.of(context)!
+                  .translate("No Live Posts, Check Later"),
               style: TextStyle(
                   color: globals.theme_mode == ThemeMode.dark
                       ? Colors.white
@@ -190,7 +192,8 @@ class _HomePageState extends State<HomePage> {
                             SnackBar(
                               duration: const Duration(seconds: 3),
                               content: Text(
-                                  "Sign up to enjoy helping people :D",
+                                  AppLocalizations.of(context)!.translate(
+                                      "Sign up to enjoy helping people :D"),
                                   style: TextStyle(color: Colors.white)),
                               backgroundColor: Colors.black,
                             ),
@@ -313,7 +316,8 @@ class _HomePageState extends State<HomePage> {
                             SnackBar(
                               duration: const Duration(seconds: 3),
                               content: Text(
-                                  "Sign up to enjoy helping people :D,",
+                                  AppLocalizations.of(context)!.translate(
+                                      "Sign up to enjoy helping people :D,"),
                                   style: TextStyle(color: Colors.white)),
                               backgroundColor: Colors.black,
                             ),
@@ -393,6 +397,8 @@ class _HomePageState extends State<HomePage> {
       children: [
         allposts[index].photos!.length != 2
             ? Container(
+                // height: MediaQuery.of(context).size.height * 0.37,
+                // width: MediaQuery.of(context).size.width * 0.5,
                 child: Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -440,7 +446,8 @@ class _HomePageState extends State<HomePage> {
                                       SnackBar(
                                         duration: const Duration(seconds: 3),
                                         content: Text(
-                                            "Sign up to enjoy helping people :D",
+                                            AppLocalizations.of(context)!.translate(
+                                                "Sign up to enjoy helping people :D"),
                                             style:
                                                 TextStyle(color: Colors.white)),
                                         backgroundColor: Colors.black,
@@ -581,7 +588,9 @@ class _HomePageState extends State<HomePage> {
                                         SnackBar(
                                           duration: const Duration(seconds: 3),
                                           content: Text(
-                                              "Sign up to enjoy helping people :D",
+                                              AppLocalizations.of(context)!
+                                                  .translate(
+                                                      "Sign up to enjoy helping people :D"),
                                               style: TextStyle(
                                                   color: Colors.white)),
                                           backgroundColor: Colors.black,
@@ -721,7 +730,8 @@ class _HomePageState extends State<HomePage> {
                             SnackBar(
                               duration: const Duration(seconds: 3),
                               content: Text(
-                                  "Sign up to enjoy helping people :D",
+                                  AppLocalizations.of(context)!.translate(
+                                      "Sign up to enjoy helping people :D"),
                                   style: TextStyle(color: Colors.white)),
                               backgroundColor: Colors.black,
                             ),
@@ -843,7 +853,8 @@ class _HomePageState extends State<HomePage> {
                               SnackBar(
                                 duration: const Duration(seconds: 3),
                                 content: Text(
-                                    "Sign up to enjoy helping people :D",
+                                    AppLocalizations.of(context)!.translate(
+                                        "Sign up to enjoy helping people :D"),
                                     style: TextStyle(color: Colors.white)),
                                 backgroundColor: Colors.black,
                               ),
@@ -978,7 +989,9 @@ class _HomePageState extends State<HomePage> {
                                         SnackBar(
                                           duration: const Duration(seconds: 3),
                                           content: Text(
-                                              "Sign up to enjoy helping people :D",
+                                              AppLocalizations.of(context)!
+                                                  .translate(
+                                                      "Sign up to enjoy helping people :D"),
                                               style: TextStyle(
                                                   color: Colors.white)),
                                           backgroundColor: Colors.black,
@@ -1096,14 +1109,21 @@ class _HomePageState extends State<HomePage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           duration: const Duration(seconds: 1),
-                          content: Text("Loading more posts",
+                          content: Text(
+                              AppLocalizations.of(context)!
+                                  .translate("Loading more posts"),
                               style: TextStyle(color: Colors.black)),
                           backgroundColor: Colors.grey.withOpacity(0.5),
                         ),
                       );
                       current_page = current_page + 1;
-                      BlocProvider.of<PostsCubit>(context)
-                          .getguestposts(current_page);
+                      if (widget.usertype == 'user') {
+                        BlocProvider.of<PostsCubit>(context)
+                            .getAllPosts(globals.main_user.sId, current_page);
+                      } else {
+                        BlocProvider.of<PostsCubit>(context)
+                            .getguestposts(current_page);
+                      }
                     }
                   },
                   itemBuilder: (context, index) {
@@ -1146,7 +1166,10 @@ class _HomePageState extends State<HomePage> {
                                           SnackBar(
                                             duration:
                                                 const Duration(seconds: 1),
-                                            content: Text("Already Reported",
+                                            content: Text(
+                                                AppLocalizations.of(context)!
+                                                    .translate(
+                                                        "Already Reported"),
                                                 style: TextStyle(
                                                     color: Colors.black)),
                                             backgroundColor:
@@ -1154,18 +1177,83 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         );
                                       } else {
-                                        reported_ids.add(
-                                            allposts[index].sId.toString());
-                                        BlocProvider.of<PostsCubit>(context)
-                                            .report_user(
-                                                allposts[index].user?.sId,
-                                                allposts[index].sId,
-                                                globals.main_user.sId);
-                                        controller.animateToPage(
-                                            Page_View_Index + 1,
-                                            curve: Curves.decelerate,
-                                            duration:
-                                                Duration(milliseconds: 300));
+                                        showDialog(
+                                          context: context,
+                                          builder: (ctx) => AlertDialog(
+                                            backgroundColor:
+                                                globals.theme_mode ==
+                                                        ThemeMode.dark
+                                                    ? Colors.black87
+                                                    : Colors.white,
+                                            content: Text(
+                                              AppLocalizations.of(context)!
+                                                  .translate(
+                                                      "Are you sure you want to report this post?"),
+                                              style: TextStyle(
+                                                color: globals.theme_mode ==
+                                                        ThemeMode.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(ctx).pop();
+                                                },
+                                                child: Container(
+                                                  color: Color(0xffA9A9A9),
+                                                  padding:
+                                                      const EdgeInsets.all(14),
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .translate("Cancel"),
+                                                    style: TextStyle(
+                                                        color:
+                                                            MyColors.mywhite),
+                                                  ),
+                                                ),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  reported_ids.add(
+                                                      allposts[index]
+                                                          .sId
+                                                          .toString());
+                                                  BlocProvider.of<PostsCubit>(
+                                                          context)
+                                                      .report_user(
+                                                          allposts[index]
+                                                              .user
+                                                              ?.sId,
+                                                          allposts[index].sId,
+                                                          globals
+                                                              .main_user.sId);
+                                                  controller.animateToPage(
+                                                      Page_View_Index + 1,
+                                                      curve: Curves.decelerate,
+                                                      duration: Duration(
+                                                          milliseconds: 300));
+                                                  Navigator.of(ctx).pop();
+                                                },
+                                                child: Container(
+                                                  color: MyColors.myRed,
+                                                  padding:
+                                                      const EdgeInsets.all(14),
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .translate("Report"),
+                                                    style: TextStyle(
+                                                        color:
+                                                            MyColors.mywhite),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
                                       }
                                     } else {
                                       Navigator.of(context)
@@ -1175,7 +1263,9 @@ class _HomePageState extends State<HomePage> {
                                         SnackBar(
                                           duration: const Duration(seconds: 3),
                                           content: Text(
-                                              "Sign up to enjoy helping people :D",
+                                              AppLocalizations.of(context)!
+                                                  .translate(
+                                                      "Sign up to enjoy helping people :D"),
                                               style: TextStyle(
                                                   color: Colors.white)),
                                           backgroundColor: Colors.black,
@@ -1285,7 +1375,7 @@ class _HomePageState extends State<HomePage> {
                   : Colors.black,
             ),
             title: Text(
-              "Account",
+              AppLocalizations.of(context)!.translate("Account"),
               style: TextStyle(
                   color: globals.theme_mode == ThemeMode.dark
                       ? Colors.white
@@ -1309,7 +1399,7 @@ class _HomePageState extends State<HomePage> {
                   : Colors.black,
             ),
             title: Text(
-              "My Posts",
+              AppLocalizations.of(context)!.translate("My Posts"),
               style: TextStyle(
                   color: globals.theme_mode == ThemeMode.dark
                       ? Colors.white
@@ -1333,7 +1423,7 @@ class _HomePageState extends State<HomePage> {
                   : Colors.black,
             ),
             title: Text(
-              "Choices History",
+              AppLocalizations.of(context)!.translate("Choices History"),
               style: TextStyle(
                   color: globals.theme_mode == ThemeMode.dark
                       ? Colors.white
@@ -1445,7 +1535,7 @@ class _HomePageState extends State<HomePage> {
                   : Colors.black,
             ),
             title: Text(
-              "Logout",
+              AppLocalizations.of(context)!.translate("Logout"),
               style: TextStyle(
                   color: globals.theme_mode == ThemeMode.dark
                       ? Colors.white
@@ -1491,7 +1581,9 @@ class _HomePageState extends State<HomePage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   duration: const Duration(seconds: 3),
-                  content: Text("Sign up to enjoy helping people :D",
+                  content: Text(
+                      AppLocalizations.of(context)!
+                          .translate("Sign up to enjoy helping people :D"),
                       style: TextStyle(color: Colors.white)),
                   backgroundColor: Colors.black,
                 ),
@@ -1516,7 +1608,9 @@ class _HomePageState extends State<HomePage> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     duration: const Duration(seconds: 3),
-                    content: Text("Sign up to enjoy helping people :D",
+                    content: Text(
+                        AppLocalizations.of(context)!
+                            .translate("Sign up to enjoy helping people :D"),
                         style: TextStyle(color: Colors.white)),
                     backgroundColor: Colors.black,
                   ),
@@ -1576,7 +1670,9 @@ class _HomePageState extends State<HomePage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       duration: const Duration(seconds: 3),
-                      content: Text("Sign up to enjoy helping people :D",
+                      content: Text(
+                          AppLocalizations.of(context)!
+                              .translate("Sign up to enjoy helping people :D"),
                           style: TextStyle(color: Colors.white)),
                       backgroundColor: Colors.black,
                     ),

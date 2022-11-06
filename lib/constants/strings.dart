@@ -1,5 +1,5 @@
-// final baseUrl = 'http://10.0.2.2:4000/api/';
-final baseUrl = 'http://192.168.1.57:4000/api/';
+final baseUrl = 'http://10.0.2.2:4000/api/';
+// final baseUrl = 'http://192.168.1.57:4000/api/';
 //final baseUrl = 'http://localhost:38496/api/';
 // final baseUrl = 'http://localhost:4000/api/';
 var homePageScreen = '/homepage';

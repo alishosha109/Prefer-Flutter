@@ -1,3 +1,4 @@
+import 'package:Prefer/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:Prefer/constants/strings.dart';
@@ -74,7 +75,8 @@ class _MyPostsPageState extends State<MyPostsPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               duration: const Duration(seconds: 2),
-              content: Text("Post removed from live posts"),
+              content: Text(AppLocalizations.of(context)!
+                  .translate("Post removed from live posts")),
               backgroundColor: Colors.grey.withOpacity(0.5),
             ),
           );
@@ -82,7 +84,8 @@ class _MyPostsPageState extends State<MyPostsPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               duration: const Duration(seconds: 1),
-              content: Text("Error Occured"),
+              content: Text(
+                  AppLocalizations.of(context)!.translate("Error Occured")),
               backgroundColor: Colors.grey.withOpacity(0.5),
             ),
           );
@@ -115,7 +118,8 @@ class _MyPostsPageState extends State<MyPostsPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "You didn't upload any posts yet, go add one now!",
+                    AppLocalizations.of(context)!.translate(
+                        "You didn't upload any posts yet, go add one now!"),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -634,6 +638,56 @@ class _MyPostsPageState extends State<MyPostsPage> {
     );
   }
 
+  Delete_Dialog(index) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: globals.theme_mode == ThemeMode.dark
+            ? Colors.black87
+            : Colors.white,
+        content: Text(
+          AppLocalizations.of(context)!.translate(
+              "Are you sure you want to remove this post from live posts?"),
+          style: TextStyle(
+            color: globals.theme_mode == ThemeMode.dark
+                ? Colors.white
+                : Colors.black,
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Color(0xffA9A9A9),
+              padding: const EdgeInsets.all(14),
+              child: Text(
+                AppLocalizations.of(context)!.translate("Cancel"),
+                style: TextStyle(color: MyColors.mywhite),
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              BlocProvider.of<PostsCubit>(context)
+                  .changehidden(myposts[index].sId);
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: MyColors.myRed,
+              padding: const EdgeInsets.all(14),
+              child: Text(
+                AppLocalizations.of(context)!.translate("Remove"),
+                style: TextStyle(color: MyColors.mywhite),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget buildLoadedScrollerWidget() {
     return loading
         ? Center(
@@ -662,7 +716,8 @@ class _MyPostsPageState extends State<MyPostsPage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           duration: const Duration(seconds: 1),
-                          content: Text("Loading more posts"),
+                          content: Text(AppLocalizations.of(context)!
+                              .translate("Loading more posts")),
                           backgroundColor: Colors.grey.withOpacity(0.5),
                         ),
                       );
@@ -677,57 +732,12 @@ class _MyPostsPageState extends State<MyPostsPage> {
                         if (myposts[index].hidden == true) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             duration: const Duration(seconds: 1),
-                            content: Text("Post period already ended"),
+                            content: Text(AppLocalizations.of(context)!
+                                .translate("Post period already ended")),
                             backgroundColor: Colors.grey.withOpacity(0.5),
                           ));
                         } else {
-                          showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              backgroundColor:
-                                  globals.theme_mode == ThemeMode.dark
-                                      ? Colors.black87
-                                      : Colors.white,
-                              content: Text(
-                                "Are you sure you want to remove this post from live posts?",
-                                style: TextStyle(
-                                  color: globals.theme_mode == ThemeMode.dark
-                                      ? Colors.white
-                                      : Colors.black,
-                                ),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(ctx).pop();
-                                  },
-                                  child: Container(
-                                    color: Color(0xffA9A9A9),
-                                    padding: const EdgeInsets.all(14),
-                                    child: const Text(
-                                      "Cancel",
-                                      style: TextStyle(color: MyColors.mywhite),
-                                    ),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    BlocProvider.of<PostsCubit>(context)
-                                        .changehidden(myposts[index].sId);
-                                    Navigator.of(ctx).pop();
-                                  },
-                                  child: Container(
-                                    color: MyColors.myRed,
-                                    padding: const EdgeInsets.all(14),
-                                    child: const Text(
-                                      "Remove",
-                                      style: TextStyle(color: MyColors.mywhite),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
+                          Delete_Dialog(index);
                         }
                       },
                       child: Card(
@@ -757,6 +767,41 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                     )),
                                 First_Row_Two_Images_Widget(index),
                                 Second_Row_Two_Images_Widget(index),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                  child: RawMaterialButton(
+                                    onPressed: () {
+                                      if (myposts[index].hidden == true) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          duration: const Duration(seconds: 1),
+                                          content: Text(AppLocalizations.of(
+                                                  context)!
+                                              .translate(
+                                                  "Post period already ended")),
+                                          backgroundColor:
+                                              Colors.grey.withOpacity(0.5),
+                                        ));
+                                      } else {
+                                        Delete_Dialog(index);
+                                      }
+                                    },
+                                    constraints:
+                                        BoxConstraints.tight(Size(36, 36)),
+                                    elevation: 2.0,
+                                    fillColor:
+                                        globals.theme_mode == ThemeMode.dark
+                                            ? main_color.withOpacity(0.5)
+                                            : main_color,
+                                    child: Icon(
+                                      Icons.delete,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                    shape: CircleBorder(),
+                                  ),
+                                ),
                               ]),
                         ),
                       ),
@@ -875,7 +920,7 @@ class _MyPostsPageState extends State<MyPostsPage> {
               ? Colors.black
               : MyColors.myRed,
           title: Text(
-            "My Posts",
+            AppLocalizations.of(context)!.translate("My Posts"),
             style: TextStyle(
               color: globals.theme_mode == ThemeMode.dark
                   ? Colors.white

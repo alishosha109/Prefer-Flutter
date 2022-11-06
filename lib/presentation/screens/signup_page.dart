@@ -1,3 +1,4 @@
+import 'package:Prefer/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:Prefer/business_logic/cubit/users_cubit.dart';
@@ -56,7 +57,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       left: MediaQuery.of(context).size.width * 0.075,
                       bottom: MediaQuery.of(context).size.height * 0.03,
                       child: Text(
-                        'SignUp',
+                        AppLocalizations.of(context)!.translate('SignUp'),
                         style: TextStyle(
                             fontFamily: "Montserrat",
                             fontWeight: FontWeight.w600,
@@ -83,14 +84,17 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Username can\'t be empty';
+                      return AppLocalizations.of(context)!
+                          .translate('Username can\'t be empty');
                     } else if (value.length < 8) {
-                      return 'Username must be more than 8 characters';
+                      return AppLocalizations.of(context)!
+                          .translate('Username must be more than 8 characters');
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                      hintText: "Username",
+                      hintText:
+                          AppLocalizations.of(context)!.translate("Username"),
                       hintStyle: TextStyle(fontSize: 14, color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                           borderSide:
@@ -110,14 +114,17 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Phone number can\'t be empty';
+                      return AppLocalizations.of(context)!
+                          .translate('Phone number can\'t be empty');
                     } else if (value.length < 11) {
-                      return 'Enter correct phone number';
+                      return AppLocalizations.of(context)!
+                          .translate('Enter correct phone number');
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                      hintText: "Phone Number",
+                      hintText: AppLocalizations.of(context)!
+                          .translate("Phone Number"),
                       hintStyle: TextStyle(fontSize: 14, color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                           borderSide:
@@ -167,7 +174,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 14.0),
                                 child: Text(
-                                  "BirthDate",
+                                  AppLocalizations.of(context)!
+                                      .translate("BirthDate"),
                                   style: TextStyle(
                                       fontSize: 14, color: Colors.black),
                                 ),
@@ -176,7 +184,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           birthdate == null
                               ? Text(
-                                  'Choose Birth Date',
+                                  AppLocalizations.of(context)!
+                                      .translate('Choose Birth Date'),
                                   style: TextStyle(
                                       fontSize: 14, color: MyColors.myRed),
                                 )
@@ -200,9 +209,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Passowrd can\'t be empty';
+                      return AppLocalizations.of(context)!
+                          .translate('Passowrd can\'t be empty');
                     } else if (value.length < 8) {
-                      return 'Password must be more than 8 characters';
+                      return AppLocalizations.of(context)!
+                          .translate('Password must be more than 8 characters');
                     }
                     pass1 = value;
 
@@ -212,7 +223,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       enabledBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(width: 1, color: Colors.black)),
-                      hintText: "Password",
+                      hintText:
+                          AppLocalizations.of(context)!.translate("Password"),
                       suffixIcon: show_pass == true
                           ? InkWell(
                               onTap: () {
@@ -250,7 +262,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   style: TextStyle(color: Colors.black),
                   validator: (value) {
                     if (value != pass1) {
-                      return 'Passwords doesn\'t match';
+                      return AppLocalizations.of(context)!
+                          .translate('Passwords doesn\'t match');
                     }
                     return null;
                   },
@@ -258,7 +271,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       enabledBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(width: 1, color: Colors.black)),
-                      hintText: "Repeat Password",
+                      hintText: AppLocalizations.of(context)!
+                          .translate("Repeat Password"),
                       hintStyle: TextStyle(fontSize: 14, color: Colors.black),
                       suffixIcon: show_pass == true
                           ? InkWell(
@@ -296,8 +310,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   padding: EdgeInsets.only(left: 20),
                   child: GenderPickerWithImage(
                     verticalAlignedText: false,
-                    maleText: "Male",
-                    femaleText: "Female",
+                    maleText: AppLocalizations.of(context)!.translate("Male"),
+                    femaleText:
+                        AppLocalizations.of(context)!.translate("Female"),
                     selectedGender: Gender.Male,
 
                     selectedGenderTextStyle: TextStyle(
@@ -331,7 +346,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   duration: const Duration(seconds: 3),
-                                  content: Text("Please choose a birthdate"),
+                                  content: Text(AppLocalizations.of(context)!
+                                      .translate("Please choose a birthdate")),
                                   backgroundColor: Colors.black,
                                 ),
                               );
@@ -361,7 +377,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               borderRadius: BorderRadius.circular(50.0)),
                           child: Center(
                               child: Text(
-                            'SignUp',
+                            AppLocalizations.of(context)!.translate('SignUp'),
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
@@ -383,14 +399,15 @@ class _SignUpPageState extends State<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Already have an account? ',
+                        AppLocalizations.of(context)!
+                            .translate('Already have an account? '),
                         style: TextStyle(
                             fontSize: 14.0,
                             fontWeight: FontWeight.w500,
                             color: Colors.black),
                       ),
                       Text(
-                        'Just Login!',
+                        AppLocalizations.of(context)!.translate('Just Login!'),
                         style: TextStyle(
                             color: MyColors.myRed,
                             fontSize: 14.0,

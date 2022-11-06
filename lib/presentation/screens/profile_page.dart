@@ -1,3 +1,4 @@
+import 'package:Prefer/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
@@ -116,7 +117,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "Users you have helped: ",
+                          AppLocalizations.of(context)!
+                              .translate("Users you have helped: "),
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -158,7 +160,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "Users helped you: ",
+                          AppLocalizations.of(context)!
+                              .translate("Users helped you: "),
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -250,7 +253,8 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "If  your reports exceeded 50 you will be permanently banned",
+                  AppLocalizations.of(context)!.translate(
+                      "If  your reports exceeded 50 you will be permanently banned"),
                   overflow: TextOverflow.clip,
                   style: TextStyle(
                     fontSize: 10,
@@ -303,8 +307,8 @@ class _ProfilePageState extends State<ProfilePage> {
             backgroundColor: globals.theme_mode == ThemeMode.dark
                 ? Colors.black
                 : MyColors.myRed,
-            title: const Text(
-              "My Account",
+            title: Text(
+              AppLocalizations.of(context)!.translate("My Account"),
               style: TextStyle(
                 fontSize: 20,
               ),
