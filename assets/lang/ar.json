@@ -37,7 +37,7 @@
     "Remove":"حذف",
     "Post period already ended":"انتهت فتره المنشور بالفعل",
     "Users you have helped: ":"المستخدمون الذين ساعدتهم: ",
-    "Users helped you: ":"المستخدمين الذين ساعدوك",
+    "Users helped you: ":"المستخدمون الذين ساعدوك: ",
     "If your reports exceeded 50 you will be permanently banned":"إذا تم الأبلاغ عنك اكثر من ٥٠ ، فسيتم حظرك بشكل دائم",
     "My Account":"حسابي",
     "SignUp":"سجل",
@@ -52,5 +52,9 @@
     "Female":"أنثى",
     "Please choose a birthdate":"الرجاء اختيار تاريخ الميلاد",
     "Already have an account? ":"هل لديك حساب؟ ",
-    "Just Login!":"فقط قم بتسجيل الدخول!"
+    "Just Login!":"فقط قم بتسجيل الدخول!",
+    "Times you have been reported":"عدد مرات الإبلاغ عنك",
+    "Blocked":"ممنوع من النشر",
+    "Yes":"نعم",
+    "No":"لا"
 }

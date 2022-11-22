@@ -1,4 +1,5 @@
 import 'package:Prefer/app_localizations.dart';
+import 'package:Prefer/business_logic/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -152,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: show_pass == true ? false : true,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.04,
+                  height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 GestureDetector(
                   onTap: loading == false
@@ -210,6 +211,41 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
+                Container(
+                  height: 40,
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: MyColors.myRed, //<-- SEE HERE
+                  ),
+                  child: BlocBuilder<ThemeCubit, ThemeState>(
+                    builder: (context, state) {
+                      return DropdownButton<String>(
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                        value: globals.locale.languageCode == "en"
+                            ? "English"
+                            : "عربي",
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: ['عربي', 'English'].map((String items) {
+                          return DropdownMenuItem<String>(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            if (newValue == "English") {
+                              BlocProvider.of<ThemeCubit>(context)
+                                  .changeLanguage("en");
+                            } else {
+                              BlocProvider.of<ThemeCubit>(context)
+                                  .changeLanguage("ar");
+                            }
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ),
               ]),
             )
           ],
@@ -224,6 +260,8 @@ class _LoginPageState extends State<LoginPage> {
         if (state is usersignincomplete) {
           globals.save_tokens_to_globals();
           globals.saveUser();
+          globals.usertype = "user";
+
           Navigator.pushReplacementNamed(
             context,
             homePageScreen,

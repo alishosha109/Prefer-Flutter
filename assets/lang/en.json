@@ -38,13 +38,13 @@
     "Post period already ended":"Post period already ended",
     "Users you have helped: ":"Users you have helped: ",
     "Users helped you: ":"Users helped you: ",
-    "If  your reports exceeded 50 you will be permanently banned":"If  your reports exceeded 50 you will be permanently banned",
+    "Times you have been reported":"Times you have been reported",
+    "If your reports exceeded 50 you will be permanently banned":"If your reports exceeded 50 you will be permanently banned",
     "My Account":"My Account",
     "SignUp":"SignUp",
     "Phone number can't be empty":"Phone number can't be empty",
     "Enter correct phone number":"Enter correct phone number",
     "Phone Number":"Phone Number",
-    
     "BirthDate":"BirthDate",
     "Choose Birth Date":"Choose Birth Date",
     "Passwords doesn't match":"Passwords doesn't match",
@@ -53,5 +53,8 @@
     "Female":"Female",
     "Please choose a birthdate":"Please choose a birthdate",
     "Already have an account? ":"Already have an account? ",
-    "Just Login!":"Just Login!"
+    "Just Login!":"Just Login!",
+    "Blocked":"Blocked",
+    "Yes":"Yes",
+    "No":"No"
 }

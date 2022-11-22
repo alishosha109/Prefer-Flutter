@@ -1,4 +1,5 @@
 import 'package:Prefer/app_localizations.dart';
+import 'package:Prefer/business_logic/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:Prefer/business_logic/cubit/users_cubit.dart';
@@ -34,6 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
   var loading = false;
   var error_message = "";
   bool isInteger(num value) => value is int || value == value.roundToDouble();
+
   Widget bloc_child_widget() {
     return SingleChildScrollView(
       child: Form(
@@ -419,6 +421,44 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
+                Container(
+                  height: 40,
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: MyColors.myRed, //<-- SEE HERE
+                  ),
+                  child: BlocBuilder<ThemeCubit, ThemeState>(
+                    builder: (context, state) {
+                      return DropdownButton<String>(
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                        value: globals.locale.languageCode == "en"
+                            ? "English"
+                            : "عربي",
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: ['عربي', 'English'].map((String items) {
+                          return DropdownMenuItem<String>(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            if (newValue == "English") {
+                              BlocProvider.of<ThemeCubit>(context)
+                                  .changeLanguage("en");
+                            } else {
+                              BlocProvider.of<ThemeCubit>(context)
+                                  .changeLanguage("ar");
+                            }
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
               ]),
             )
           ],
@@ -428,13 +468,19 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget buildblocWidget() {
-    return BlocConsumer<UsersCubit, UsersState>(listener: (context, state) {
+    return BlocConsumer<UsersCubit, UsersState>(
+        listener: (context, state) async {
       if (state is usersignupcomplete) {
-        determinePosition();
+        await determinePosition();
         globals.save_tokens_to_globals();
         globals.saveUser();
-        Navigator.of(context)
-            .pushReplacementNamed(homePageScreen, arguments: "user");
+        globals.usertype = "user";
+        // Navigator.of(context)
+        //     .pushReplacementNamed(homePageScreen, arguments: "user");
+        Navigator.pushReplacementNamed(
+          context,
+          homePageScreen,
+        );
       }
       if (state is usersignuperror) {
         signed = (state).signed;

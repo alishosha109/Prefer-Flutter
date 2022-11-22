@@ -16,6 +16,8 @@ import 'package:draggable_fab/draggable_fab.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'dart:ui';
 
 class HexColor extends Color {
@@ -122,7 +124,9 @@ class _MyPostsPageState extends State<MyPostsPage> {
                         "You didn't upload any posts yet, go add one now!"),
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: globals.theme_mode == ThemeMode.dark
+                          ? Colors.white
+                          : Colors.black,
                     ),
                   ),
                 ),
@@ -135,7 +139,7 @@ class _MyPostsPageState extends State<MyPostsPage> {
 
   Widget First_Container_First_Row_IF_2_Choices(index) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.37,
+      height: MediaQuery.of(context).size.height * 0.36,
       width: MediaQuery.of(context).size.width * 0.5,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 15),
@@ -146,27 +150,36 @@ class _MyPostsPageState extends State<MyPostsPage> {
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 130),
-                    child: SpinKitFadingFour(
-                      itemBuilder: (BuildContext context, int index) {
-                        return DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: index.isEven ? Colors.white : Colors.grey,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 130),
+                  //   child: SpinKitFadingFour(
+                  //     itemBuilder: (BuildContext context, int index) {
+                  //       return DecoratedBox(
+                  //         decoration: BoxDecoration(
+                  //           color: index.isEven ? Colors.white : Colors.grey,
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   Column(
                     children: [
                       Container(
-                        height: MediaQuery.of(context).size.height * 0.34,
+                        height: MediaQuery.of(context).size.height * 0.33,
                         child: SizedBox.expand(
                           child: FittedBox(
-                            child: FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
-                                image: '${myposts[index].photos?[0][0]}'),
+                            child: CachedNetworkImage(
+                              imageUrl: '${myposts[index].photos![0][0]}',
+                              progressIndicatorBuilder: (context, url,
+                                      downloadProgress) =>
+                                  Transform.scale(
+                                      scale: 0.1,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.grey,
+                                          value: downloadProgress.progress)),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -185,7 +198,7 @@ class _MyPostsPageState extends State<MyPostsPage> {
                     )),
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height *
-                        0.3 *
+                        0.34 *
                         int.parse(myposts[index].photos![0][1]) /
                         100,
                     color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
@@ -201,10 +214,10 @@ class _MyPostsPageState extends State<MyPostsPage> {
 
   Widget First_Container_Second_Row_IF_2_Choices(index) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.37,
+      height: MediaQuery.of(context).size.height * 0.36,
       width: MediaQuery.of(context).size.width * 0.5,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 14, 8, 8),
+        padding: const EdgeInsets.fromLTRB(8.0, 15, 8, 8),
         child: Container(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
@@ -212,25 +225,34 @@ class _MyPostsPageState extends State<MyPostsPage> {
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 130),
-                    child: SpinKitFadingFour(
-                      itemBuilder: (BuildContext context, int index) {
-                        return DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: index.isEven ? Colors.white : Colors.grey,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 130),
+                  //   child: SpinKitFadingFour(
+                  //     itemBuilder: (BuildContext context, int index) {
+                  //       return DecoratedBox(
+                  //         decoration: BoxDecoration(
+                  //           color: index.isEven ? Colors.white : Colors.grey,
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.34,
+                    height: MediaQuery.of(context).size.height * 0.36,
                     child: SizedBox.expand(
                       child: FittedBox(
-                        child: FadeInImage.memoryNetwork(
-                            placeholder: kTransparentImage,
-                            image: '${myposts[index].photos![1][0]}'),
+                        child: CachedNetworkImage(
+                          imageUrl: '${myposts[index].photos![1][0]}',
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  Transform.scale(
+                                      scale: 0.1,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.grey,
+                                          value: downloadProgress.progress)),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -279,21 +301,21 @@ class _MyPostsPageState extends State<MyPostsPage> {
                               child: Stack(
                                 alignment: Alignment.bottomCenter,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 130),
-                                    child: SpinKitFadingFour(
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            color: index.isEven
-                                                ? Colors.white
-                                                : Colors.grey,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(bottom: 130),
+                                  //   child: SpinKitFadingFour(
+                                  //     itemBuilder:
+                                  //         (BuildContext context, int index) {
+                                  //       return DecoratedBox(
+                                  //         decoration: BoxDecoration(
+                                  //           color: index.isEven
+                                  //               ? Colors.white
+                                  //               : Colors.grey,
+                                  //         ),
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // ),
                                   Column(
                                     children: [
                                       Container(
@@ -302,10 +324,22 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                                 0.34,
                                         child: SizedBox.expand(
                                           child: FittedBox(
-                                            child: FadeInImage.memoryNetwork(
-                                                placeholder: kTransparentImage,
-                                                image:
-                                                    '${myposts[index].photos![0][0]}'),
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  '${myposts[index].photos![0][0]}',
+                                              progressIndicatorBuilder: (context,
+                                                      url, downloadProgress) =>
+                                                  Transform.scale(
+                                                      scale: 0.1,
+                                                      child: CircularProgressIndicator(
+                                                          color: Colors.grey,
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress)),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            ),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -352,30 +386,41 @@ class _MyPostsPageState extends State<MyPostsPage> {
                               child: Stack(
                                 alignment: Alignment.bottomCenter,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 130),
-                                    child: SpinKitFadingFour(
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            color: index.isEven
-                                                ? Colors.white
-                                                : Colors.grey,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(bottom: 130),
+                                  //   child: SpinKitFadingFour(
+                                  //     itemBuilder:
+                                  //         (BuildContext context, int index) {
+                                  //       return DecoratedBox(
+                                  //         decoration: BoxDecoration(
+                                  //           color: index.isEven
+                                  //               ? Colors.white
+                                  //               : Colors.grey,
+                                  //         ),
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // ),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.34,
                                     child: SizedBox.expand(
                                       child: FittedBox(
-                                        child: FadeInImage.memoryNetwork(
-                                          placeholder: kTransparentImage,
-                                          image:
+                                        child: CachedNetworkImage(
+                                          imageUrl:
                                               '${myposts[index].photos![1][0]}',
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Transform.scale(
+                                                  scale: 0.1,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          color: Colors.grey,
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress)),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
                                         ),
                                         fit: BoxFit.cover,
                                       ),
@@ -435,25 +480,34 @@ class _MyPostsPageState extends State<MyPostsPage> {
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 130),
-                    child: SpinKitFadingFour(
-                      itemBuilder: (BuildContext context, int index) {
-                        return DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: index.isEven ? Colors.white : Colors.grey,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 130),
+                  //   child: SpinKitFadingFour(
+                  //     itemBuilder: (BuildContext context, int index) {
+                  //       return DecoratedBox(
+                  //         decoration: BoxDecoration(
+                  //           color: index.isEven ? Colors.white : Colors.grey,
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.34,
                     child: SizedBox.expand(
                       child: FittedBox(
-                        child: FadeInImage.memoryNetwork(
-                            placeholder: kTransparentImage,
-                            image: '${myposts[index].photos![2][0]}'),
+                        child: CachedNetworkImage(
+                          imageUrl: '${myposts[index].photos![2][0]}',
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  Transform.scale(
+                                      scale: 0.1,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.grey,
+                                          value: downloadProgress.progress)),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -496,25 +550,34 @@ class _MyPostsPageState extends State<MyPostsPage> {
                 child: Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 130),
-                      child: SpinKitFadingFour(
-                        itemBuilder: (BuildContext context, int index) {
-                          return DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: index.isEven ? Colors.white : Colors.grey,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(bottom: 130),
+                    //   child: SpinKitFadingFour(
+                    //     itemBuilder: (BuildContext context, int index) {
+                    //       return DecoratedBox(
+                    //         decoration: BoxDecoration(
+                    //           color: index.isEven ? Colors.white : Colors.grey,
+                    //         ),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.34,
                       child: SizedBox.expand(
                         child: FittedBox(
-                          child: FadeInImage.memoryNetwork(
-                              placeholder: kTransparentImage,
-                              image: '${myposts[index].photos![2][0]}'),
+                          child: CachedNetworkImage(
+                            imageUrl: '${myposts[index].photos![2][0]}',
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                    Transform.scale(
+                                        scale: 0.1,
+                                        child: CircularProgressIndicator(
+                                            color: Colors.grey,
+                                            value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -569,30 +632,42 @@ class _MyPostsPageState extends State<MyPostsPage> {
                               child: Stack(
                                 alignment: Alignment.bottomCenter,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 130),
-                                    child: SpinKitFadingFour(
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            color: index.isEven
-                                                ? Colors.white
-                                                : Colors.grey,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(bottom: 130),
+                                  //   child: SpinKitFadingFour(
+                                  //     itemBuilder:
+                                  //         (BuildContext context, int index) {
+                                  //       return DecoratedBox(
+                                  //         decoration: BoxDecoration(
+                                  //           color: index.isEven
+                                  //               ? Colors.white
+                                  //               : Colors.grey,
+                                  //         ),
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // ),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.34,
                                     child: SizedBox.expand(
                                       child: FittedBox(
-                                        child: FadeInImage.memoryNetwork(
-                                            placeholder: kTransparentImage,
-                                            image:
-                                                '${myposts[index].photos![3][0]}'),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              '${myposts[index].photos![3][0]}',
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Transform.scale(
+                                                  scale: 0.1,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          color: Colors.grey,
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress)),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
+                                        ),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -891,9 +966,10 @@ class _MyPostsPageState extends State<MyPostsPage> {
                       BlocProvider.of<PostsCubit>(context).getmyposts(
                           globals.main_user.sId, current_page,
                           refresh: true);
-                      controller.animateToPage(Page_View_Index,
-                          curve: Curves.decelerate,
-                          duration: Duration(milliseconds: 300));
+                      // controller.animateToPage(Page_View_Index,
+                      //     curve: Curves.decelerate,
+                      //     duration: Duration(milliseconds: 300));
+                      myposts.clear();
                     }
                   },
                   child: Icon(

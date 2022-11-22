@@ -67,6 +67,7 @@ dev_dependencies:
   gender_picker: ^1.1.0
   geolocator: ^9.0.2
   language_picker: ^0.4.1
+  cached_network_image: ^3.2.2
   flutter_test:
     sdk: flutter
 

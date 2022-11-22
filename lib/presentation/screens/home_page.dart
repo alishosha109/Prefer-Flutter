@@ -12,7 +12,6 @@ import 'package:Prefer/constants/globals.dart' as globals;
 
 import 'package:flutter_offline/flutter_offline.dart';
 import '../../data/models/post.dart';
-
 import 'package:draggable_fab/draggable_fab.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -21,6 +20,7 @@ import 'dart:ui';
 import 'package:vibration/vibration.dart';
 import 'package:language_picker/language_picker.dart';
 import 'package:language_picker/languages.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
@@ -35,7 +35,7 @@ class HexColor extends Color {
 }
 
 class HomePage extends StatefulWidget {
-  String usertype;
+  final String usertype;
   HomePage({Key? key, required this.usertype}) : super(key: key);
   @override
   State<HomePage> createState() => _HomePageState();
@@ -67,8 +67,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildBlocWidget() {
-    print(widget.usertype);
-    if (widget.usertype == "user") {
+    print(globals.usertype);
+    if (globals.usertype == "user") {
       BlocProvider.of<PostsCubit>(context)
           .getAllPosts(globals.main_user.sId, current_page);
     } else {
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: percs.containsKey(index)
                     ? null
                     : () {
-                        if (widget.usertype == "user") {
+                        if (globals.usertype == "user") {
                           BlocProvider.of<PostsCubit>(context)
                               .getPercentages(allposts[index].sId, 0, index);
                           chs[index] = 0;
@@ -204,31 +204,41 @@ class _HomePageState extends State<HomePage> {
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 130),
-                        child: SpinKitFadingFour(
-                          itemBuilder: (BuildContext context, int index) {
-                            return DecoratedBox(
-                              decoration: BoxDecoration(
-                                color:
-                                    index.isEven ? Colors.white : Colors.grey,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 130),
+                      //   child: SpinKitFadingFour(
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       return DecoratedBox(
+                      //         decoration: BoxDecoration(
+                      //           color:
+                      //               index.isEven ? Colors.white : Colors.grey,
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.36,
                         child: SizedBox.expand(
                           child: FittedBox(
-                            child: FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
-                                image: '${allposts[index].photos?[0][0]}'),
+                            child: CachedNetworkImage(
+                              imageUrl: '${allposts[index].photos![0][0]}',
+                              progressIndicatorBuilder: (context, url,
+                                      downloadProgress) =>
+                                  Transform.scale(
+                                      scale: 0.1,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.grey,
+                                          value: downloadProgress.progress)),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      widget.usertype == "user"
+
+                      globals.usertype == "user"
                           ? AnimatedOpacity(
                               opacity: percs.containsKey(index) ? 1.0 : 0.0,
                               duration: const Duration(milliseconds: 500),
@@ -236,12 +246,12 @@ class _HomePageState extends State<HomePage> {
                                 child: percs.containsKey(index)
                                     ? Align(
                                         child: Text(
-                                        "${percs[index]![0][1]} %",
+                                        "${percs[index]![0][1]} % (${((int.parse(percs[index]![0][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
                                         style: TextStyle(
-                                          //fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                        ),
+                                            //fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontFamily: 'lone'),
                                       ))
                                     : Text(""),
                                 width: double.infinity,
@@ -305,7 +315,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: percs.containsKey(index)
                     ? null
                     : () {
-                        if (widget.usertype == "user") {
+                        if (globals.usertype == "user") {
                           BlocProvider.of<PostsCubit>(context)
                               .getPercentages(allposts[index].sId, 1, index);
                           chs[index] = 1;
@@ -328,31 +338,40 @@ class _HomePageState extends State<HomePage> {
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 130),
-                        child: SpinKitFadingFour(
-                          itemBuilder: (BuildContext context, int index) {
-                            return DecoratedBox(
-                              decoration: BoxDecoration(
-                                color:
-                                    index.isEven ? Colors.white : Colors.grey,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 130),
+                      //   child: SpinKitFadingFour(
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       return DecoratedBox(
+                      //         decoration: BoxDecoration(
+                      //           color:
+                      //               index.isEven ? Colors.white : Colors.grey,
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.36,
                         child: SizedBox.expand(
                           child: FittedBox(
-                            child: FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
-                                image: '${allposts[index].photos?[1][0]}'),
+                            child: CachedNetworkImage(
+                              imageUrl: '${allposts[index].photos![1][0]}',
+                              progressIndicatorBuilder: (context, url,
+                                      downloadProgress) =>
+                                  Transform.scale(
+                                      scale: 0.1,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.grey,
+                                          value: downloadProgress.progress)),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      widget.usertype == "user"
+                      globals.usertype == "user"
                           ? AnimatedOpacity(
                               opacity: percs.containsKey(index) ? 1.0 : 0.0,
                               duration: const Duration(milliseconds: 500),
@@ -360,12 +379,12 @@ class _HomePageState extends State<HomePage> {
                                 child: percs.containsKey(index)
                                     ? Align(
                                         child: Text(
-                                        "${percs[index]![1][1]} %",
+                                        "${percs[index]![1][1]} % (${((int.parse(percs[index]![1][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
                                         style: TextStyle(
-                                          //fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                        ),
+                                            //fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontFamily: 'lone'),
                                       ))
                                     : Text(""),
                                 width: double.infinity,
@@ -434,7 +453,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: percs.containsKey(index)
                               ? null
                               : () {
-                                  if (widget.usertype == "user") {
+                                  if (globals.usertype == "user") {
                                     BlocProvider.of<PostsCubit>(context)
                                         .getPercentages(
                                             allposts[index].sId, 0, index);
@@ -459,21 +478,21 @@ class _HomePageState extends State<HomePage> {
                             child: Stack(
                               alignment: Alignment.bottomCenter,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 130),
-                                  child: SpinKitFadingFour(
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          color: index.isEven
-                                              ? Colors.white
-                                              : Colors.grey,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.only(bottom: 130),
+                                //   child: SpinKitFadingFour(
+                                //     itemBuilder:
+                                //         (BuildContext context, int index) {
+                                //       return DecoratedBox(
+                                //         decoration: BoxDecoration(
+                                //           color: index.isEven
+                                //               ? Colors.white
+                                //               : Colors.grey,
+                                //         ),
+                                //       );
+                                //     },
+                                //   ),
+                                // ),
                                 Column(
                                   children: [
                                     Container(
@@ -482,17 +501,30 @@ class _HomePageState extends State<HomePage> {
                                               0.34,
                                       child: SizedBox.expand(
                                         child: FittedBox(
-                                          child: FadeInImage.memoryNetwork(
-                                              placeholder: kTransparentImage,
-                                              image:
-                                                  '${allposts[index].photos?[0][0]}'),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                '${allposts[index].photos![0][0]}',
+                                            progressIndicatorBuilder: (context,
+                                                    url, downloadProgress) =>
+                                                Transform.scale(
+                                                    scale: 0.1,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            color: Colors.grey,
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress)),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
+                                          ),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                widget.usertype == "user"
+                                globals.usertype == "user"
                                     ? AnimatedOpacity(
                                         opacity: percs.containsKey(index)
                                             ? 1.0
@@ -503,12 +535,12 @@ class _HomePageState extends State<HomePage> {
                                           child: percs.containsKey(index)
                                               ? Align(
                                                   child: Text(
-                                                  "${percs[index]![0][1]} %",
+                                                  "${percs[index]![0][1]} % (${((int.parse(percs[index]![0][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
                                                   style: TextStyle(
-                                                    //fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontSize: 20,
-                                                  ),
+                                                      //fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                      fontSize: 15,
+                                                      fontFamily: 'lone'),
                                                 ))
                                               : Text(""),
                                           width: double.infinity,
@@ -575,7 +607,7 @@ class _HomePageState extends State<HomePage> {
                             onTap: percs.containsKey(index)
                                 ? null
                                 : () {
-                                    if (widget.usertype == "user") {
+                                    if (globals.usertype == "user") {
                                       BlocProvider.of<PostsCubit>(context)
                                           .getPercentages(
                                               allposts[index].sId, 1, index);
@@ -602,36 +634,47 @@ class _HomePageState extends State<HomePage> {
                               child: Stack(
                                 alignment: Alignment.bottomCenter,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 130),
-                                    child: SpinKitFadingFour(
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            color: index.isEven
-                                                ? Colors.white
-                                                : Colors.grey,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(bottom: 130),
+                                  //   child: SpinKitFadingFour(
+                                  //     itemBuilder:
+                                  //         (BuildContext context, int index) {
+                                  //       return DecoratedBox(
+                                  //         decoration: BoxDecoration(
+                                  //           color: index.isEven
+                                  //               ? Colors.white
+                                  //               : Colors.grey,
+                                  //         ),
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // ),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.34,
                                     child: SizedBox.expand(
                                       child: FittedBox(
-                                        child: FadeInImage.memoryNetwork(
-                                          placeholder: kTransparentImage,
-                                          image:
-                                              '${allposts[index].photos?[1][0]}',
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              '${allposts[index].photos![1][0]}',
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Transform.scale(
+                                                  scale: 0.1,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          color: Colors.grey,
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress)),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
                                         ),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
-                                  widget.usertype == "user"
+                                  globals.usertype == "user"
                                       ? AnimatedOpacity(
                                           opacity: percs.containsKey(index)
                                               ? 1.0
@@ -642,11 +685,11 @@ class _HomePageState extends State<HomePage> {
                                             child: percs.containsKey(index)
                                                 ? Align(
                                                     child: Text(
-                                                    "${percs[index]![1][1]} %",
+                                                    "${percs[index]![1][1]} % (${((int.parse(percs[index]![1][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
                                                     style: TextStyle(
                                                         //fontWeight: FontWeight.bold,
                                                         color: Colors.white,
-                                                        fontSize: 20,
+                                                        fontSize: 16,
                                                         fontFamily: 'lone'),
                                                   ))
                                                 : Text(""),
@@ -719,7 +762,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: percs.containsKey(index)
                     ? null
                     : () {
-                        if (widget.usertype == "user") {
+                        if (globals.usertype == "user") {
                           BlocProvider.of<PostsCubit>(context)
                               .getPercentages(allposts[index].sId, 2, index);
                           chs[index] = 2;
@@ -742,31 +785,40 @@ class _HomePageState extends State<HomePage> {
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 130),
-                        child: SpinKitFadingFour(
-                          itemBuilder: (BuildContext context, int index) {
-                            return DecoratedBox(
-                              decoration: BoxDecoration(
-                                color:
-                                    index.isEven ? Colors.white : Colors.grey,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 130),
+                      //   child: SpinKitFadingFour(
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       return DecoratedBox(
+                      //         decoration: BoxDecoration(
+                      //           color:
+                      //               index.isEven ? Colors.white : Colors.grey,
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.34,
                         child: SizedBox.expand(
                           child: FittedBox(
-                            child: FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
-                                image: '${allposts[index].photos?[2][0]}'),
+                            child: CachedNetworkImage(
+                              imageUrl: '${allposts[index].photos![2][0]}',
+                              progressIndicatorBuilder: (context, url,
+                                      downloadProgress) =>
+                                  Transform.scale(
+                                      scale: 0.1,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.grey,
+                                          value: downloadProgress.progress)),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      widget.usertype == "user"
+                      globals.usertype == "user"
                           ? AnimatedOpacity(
                               opacity: percs.containsKey(index) ? 1.0 : 0.0,
                               duration: const Duration(milliseconds: 500),
@@ -774,11 +826,11 @@ class _HomePageState extends State<HomePage> {
                                 child: percs.containsKey(index)
                                     ? Align(
                                         child: Text(
-                                        "${percs[index]![2][1]} %",
+                                        "${percs[index]![2][1]} % (${((int.parse(percs[index]![2][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
                                         style: TextStyle(
                                             //fontWeight: FontWeight.bold,
                                             color: Colors.white,
-                                            fontSize: 20,
+                                            fontSize: 15,
                                             fontFamily: 'lone'),
                                       ))
                                     : Text(""),
@@ -842,7 +894,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: percs.containsKey(index)
                       ? null
                       : () {
-                          if (widget.usertype == "user") {
+                          if (globals.usertype == "user") {
                             BlocProvider.of<PostsCubit>(context)
                                 .getPercentages(allposts[index].sId, 2, index);
                             chs[index] = 2;
@@ -865,31 +917,40 @@ class _HomePageState extends State<HomePage> {
                     child: Stack(
                       alignment: Alignment.bottomCenter,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 130),
-                          child: SpinKitFadingFour(
-                            itemBuilder: (BuildContext context, int index) {
-                              return DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color:
-                                      index.isEven ? Colors.white : Colors.grey,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(bottom: 130),
+                        //   child: SpinKitFadingFour(
+                        //     itemBuilder: (BuildContext context, int index) {
+                        //       return DecoratedBox(
+                        //         decoration: BoxDecoration(
+                        //           color:
+                        //               index.isEven ? Colors.white : Colors.grey,
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
                         Container(
                           height: MediaQuery.of(context).size.height * 0.34,
                           child: SizedBox.expand(
                             child: FittedBox(
-                              child: FadeInImage.memoryNetwork(
-                                  placeholder: kTransparentImage,
-                                  image: '${allposts[index].photos?[2][0]}'),
+                              child: CachedNetworkImage(
+                                imageUrl: '${allposts[index].photos![2][0]}',
+                                progressIndicatorBuilder: (context, url,
+                                        downloadProgress) =>
+                                    Transform.scale(
+                                        scale: 0.1,
+                                        child: CircularProgressIndicator(
+                                            color: Colors.grey,
+                                            value: downloadProgress.progress)),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              ),
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
-                        widget.usertype == "user"
+                        globals.usertype == "user"
                             ? AnimatedOpacity(
                                 opacity: percs.containsKey(index) ? 1.0 : 0.0,
                                 duration: const Duration(milliseconds: 500),
@@ -897,11 +958,11 @@ class _HomePageState extends State<HomePage> {
                                   child: percs.containsKey(index)
                                       ? Align(
                                           child: Text(
-                                          "${percs[index]![2][1]} %",
+                                          "${percs[index]![2][1]} % (${((int.parse(percs[index]![2][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
                                           style: TextStyle(
                                               //fontWeight: FontWeight.bold,
                                               color: Colors.white,
-                                              fontSize: 20,
+                                              fontSize: 15,
                                               fontFamily: 'lone'),
                                         ))
                                       : Text(""),
@@ -976,7 +1037,7 @@ class _HomePageState extends State<HomePage> {
                             onTap: percs.containsKey(index)
                                 ? null
                                 : () {
-                                    if (widget.usertype == "user") {
+                                    if (globals.usertype == "user") {
                                       BlocProvider.of<PostsCubit>(context)
                                           .getPercentages(
                                               allposts[index].sId, 3, index);
@@ -1003,35 +1064,47 @@ class _HomePageState extends State<HomePage> {
                               child: Stack(
                                 alignment: Alignment.bottomCenter,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 130),
-                                    child: SpinKitFadingFour(
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            color: index.isEven
-                                                ? Colors.white
-                                                : Colors.grey,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(bottom: 130),
+                                  //   child: SpinKitFadingFour(
+                                  //     itemBuilder:
+                                  //         (BuildContext context, int index) {
+                                  //       return DecoratedBox(
+                                  //         decoration: BoxDecoration(
+                                  //           color: index.isEven
+                                  //               ? Colors.white
+                                  //               : Colors.grey,
+                                  //         ),
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // ),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.34,
                                     child: SizedBox.expand(
                                       child: FittedBox(
-                                        child: FadeInImage.memoryNetwork(
-                                            placeholder: kTransparentImage,
-                                            image:
-                                                '${allposts[index].photos?[3][0]}'),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              '${allposts[index].photos![3][0]}',
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Transform.scale(
+                                                  scale: 0.1,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          color: Colors.grey,
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress)),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
+                                        ),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
-                                  widget.usertype == "user"
+                                  globals.usertype == "user"
                                       ? AnimatedOpacity(
                                           opacity: percs.containsKey(index)
                                               ? 1.0
@@ -1042,11 +1115,11 @@ class _HomePageState extends State<HomePage> {
                                             child: percs.containsKey(index)
                                                 ? Align(
                                                     child: Text(
-                                                    "${percs[index]![3][1]} %",
+                                                    "${percs[index]![3][1]} % (${((int.parse(percs[index]![3][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
                                                     style: TextStyle(
                                                         //fontWeight: FontWeight.bold,
                                                         color: Colors.white,
-                                                        fontSize: 20,
+                                                        fontSize: 15,
                                                         fontFamily: 'lone'),
                                                   ))
                                                 : Text(""),
@@ -1117,7 +1190,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                       current_page = current_page + 1;
-                      if (widget.usertype == 'user') {
+                      if (globals.usertype == 'user') {
                         BlocProvider.of<PostsCubit>(context)
                             .getAllPosts(globals.main_user.sId, current_page);
                       } else {
@@ -1158,7 +1231,7 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                                 child: RawMaterialButton(
                                   onPressed: () {
-                                    if (widget.usertype == "user") {
+                                    if (globals.usertype == "user") {
                                       if (reported_ids
                                           .contains(allposts[index].sId)) {
                                         ScaffoldMessenger.of(context)
@@ -1462,6 +1535,11 @@ class _HomePageState extends State<HomePage> {
                           BlocProvider.of<ThemeCubit>(context)
                               .toggle_Theme("dark");
                         }
+                        allposts.clear();
+                        percs.clear();
+                        chs.clear();
+                        current_page = 1;
+                        Page_View_Index = 0;
                       },
                     );
                   },
@@ -1509,6 +1587,11 @@ class _HomePageState extends State<HomePage> {
                                 .changeLanguage("ar");
                           }
                         }
+                        allposts.clear();
+                        percs.clear();
+                        chs.clear();
+                        current_page = 1;
+                        Page_View_Index = 0;
                       },
                     );
                   },
@@ -1559,7 +1642,7 @@ class _HomePageState extends State<HomePage> {
       actions: [
         InkWell(
           onTap: () {
-            if (widget.usertype == "user") {
+            if (globals.usertype == "user") {
               var dtnow = DateTime.now();
               Duration dtdiff = dtnow.difference(last_refresh);
               print(dtdiff.inSeconds);
@@ -1572,9 +1655,10 @@ class _HomePageState extends State<HomePage> {
                 BlocProvider.of<PostsCubit>(context).getAllPosts(
                     globals.main_user.sId, current_page,
                     refresh: true);
-                controller.animateToPage(Page_View_Index,
-                    curve: Curves.decelerate,
-                    duration: Duration(milliseconds: 300));
+                // controller.animateToPage(Page_View_Index,
+                //     curve: Curves.decelerate,
+                //     duration: Duration(milliseconds: 300));
+                allposts.clear();
               }
             } else {
               Navigator.of(context).pushReplacementNamed(SignUpScreen);
@@ -1601,7 +1685,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(right: 20, left: 20),
           child: InkWell(
             onTap: () {
-              if (widget.usertype == "user") {
+              if (globals.usertype == "user") {
                 _key.currentState?.openEndDrawer();
               } else {
                 Navigator.of(context).pushReplacementNamed(SignUpScreen);
@@ -1651,7 +1735,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _key = GlobalKey();
-    print(widget.usertype);
+    print(globals.usertype);
     return Scaffold(
       key: _key,
       floatingActionButton: Padding(
@@ -1663,7 +1747,7 @@ class _HomePageState extends State<HomePage> {
                   ? MyColors.myRedOpc
                   : MyColors.myRed,
               onPressed: () {
-                if (widget.usertype == "user") {
+                if (globals.usertype == "user") {
                   Navigator.pushNamed(context, addpostScreen);
                 } else {
                   Navigator.of(context).pushReplacementNamed(SignUpScreen);

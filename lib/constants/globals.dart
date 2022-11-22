@@ -112,6 +112,7 @@ Future<void> return_initialize() async {
       initialize = homePageScreen;
       save_tokens_to_globals();
       saveUser();
+      usertype = "user";
     }
   }
 }

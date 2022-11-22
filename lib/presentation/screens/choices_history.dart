@@ -16,6 +16,8 @@ import 'package:draggable_fab/draggable_fab.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'dart:ui';
 
 class HexColor extends Color {
@@ -141,26 +143,35 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                 child: Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 130),
-                      child: SpinKitFadingFour(
-                        itemBuilder: (BuildContext context, int index) {
-                          return DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: index.isEven ? Colors.white : Colors.grey,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(bottom: 130),
+                    //   child: SpinKitFadingFour(
+                    //     itemBuilder: (BuildContext context, int index) {
+                    //       return DecoratedBox(
+                    //         decoration: BoxDecoration(
+                    //           color: index.isEven ? Colors.white : Colors.grey,
+                    //         ),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.36,
                       child: SizedBox.expand(
                         child: FittedBox(
-                          child: FadeInImage.memoryNetwork(
-                              placeholder: kTransparentImage,
-                              image:
-                                  '${allhistoryposts[index].post!.photos![0][0]}'),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                '${allhistoryposts[index].post!.photos![0][0]}',
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                    Transform.scale(
+                                        scale: 0.1,
+                                        child: CircularProgressIndicator(
+                                            color: Colors.grey,
+                                            value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -233,26 +244,35 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                 child: Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 130),
-                      child: SpinKitFadingFour(
-                        itemBuilder: (BuildContext context, int index) {
-                          return DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: index.isEven ? Colors.white : Colors.grey,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(bottom: 130),
+                    //   child: SpinKitFadingFour(
+                    //     itemBuilder: (BuildContext context, int index) {
+                    //       return DecoratedBox(
+                    //         decoration: BoxDecoration(
+                    //           color: index.isEven ? Colors.white : Colors.grey,
+                    //         ),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.36,
                       child: SizedBox.expand(
                         child: FittedBox(
-                          child: FadeInImage.memoryNetwork(
-                              placeholder: kTransparentImage,
-                              image:
-                                  '${allhistoryposts[index].post!.photos![1][0]}'),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                '${allhistoryposts[index].post!.photos![1][0]}',
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                    Transform.scale(
+                                        scale: 0.1,
+                                        child: CircularProgressIndicator(
+                                            color: Colors.grey,
+                                            value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -333,22 +353,22 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                                 child: Stack(
                                   alignment: Alignment.bottomCenter,
                                   children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 130),
-                                      child: SpinKitFadingFour(
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return DecoratedBox(
-                                            decoration: BoxDecoration(
-                                              color: index.isEven
-                                                  ? Colors.white
-                                                  : Colors.grey,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
+                                    // Padding(
+                                    //   padding:
+                                    //       const EdgeInsets.only(bottom: 130),
+                                    //   child: SpinKitFadingFour(
+                                    //     itemBuilder:
+                                    //         (BuildContext context, int index) {
+                                    //       return DecoratedBox(
+                                    //         decoration: BoxDecoration(
+                                    //           color: index.isEven
+                                    //               ? Colors.white
+                                    //               : Colors.grey,
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //   ),
+                                    // ),
                                     Column(
                                       children: [
                                         Container(
@@ -358,11 +378,23 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                                               0.34,
                                           child: SizedBox.expand(
                                             child: FittedBox(
-                                              child: FadeInImage.memoryNetwork(
-                                                  placeholder:
-                                                      kTransparentImage,
-                                                  image:
-                                                      '${allhistoryposts[index].post!.photos?[0][0]}'),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    '${allhistoryposts[index].post!.photos![0][0]}',
+                                                progressIndicatorBuilder: (context,
+                                                        url,
+                                                        downloadProgress) =>
+                                                    Transform.scale(
+                                                        scale: 0.1,
+                                                        child: CircularProgressIndicator(
+                                                            color: Colors.grey,
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress)),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error),
+                                              ),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -443,32 +475,44 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                                 child: Stack(
                                   alignment: Alignment.bottomCenter,
                                   children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 130),
-                                      child: SpinKitFadingFour(
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return DecoratedBox(
-                                            decoration: BoxDecoration(
-                                              color: index.isEven
-                                                  ? Colors.white
-                                                  : Colors.grey,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
+                                    // Padding(
+                                    //   padding:
+                                    //       const EdgeInsets.only(bottom: 130),
+                                    //   child: SpinKitFadingFour(
+                                    //     itemBuilder:
+                                    //         (BuildContext context, int index) {
+                                    //       return DecoratedBox(
+                                    //         decoration: BoxDecoration(
+                                    //           color: index.isEven
+                                    //               ? Colors.white
+                                    //               : Colors.grey,
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //   ),
+                                    // ),
                                     Container(
                                       height:
                                           MediaQuery.of(context).size.height *
                                               0.34,
                                       child: SizedBox.expand(
                                         child: FittedBox(
-                                          child: FadeInImage.memoryNetwork(
-                                            placeholder: kTransparentImage,
-                                            image:
+                                          child: CachedNetworkImage(
+                                            imageUrl:
                                                 '${allhistoryposts[index].post!.photos![1][0]}',
+                                            progressIndicatorBuilder: (context,
+                                                    url, downloadProgress) =>
+                                                Transform.scale(
+                                                    scale: 0.1,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            color: Colors.grey,
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress)),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
                                           ),
                                           fit: BoxFit.cover,
                                         ),
@@ -559,26 +603,35 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                 child: Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 130),
-                      child: SpinKitFadingFour(
-                        itemBuilder: (BuildContext context, int index) {
-                          return DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: index.isEven ? Colors.white : Colors.grey,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(bottom: 130),
+                    //   child: SpinKitFadingFour(
+                    //     itemBuilder: (BuildContext context, int index) {
+                    //       return DecoratedBox(
+                    //         decoration: BoxDecoration(
+                    //           color: index.isEven ? Colors.white : Colors.grey,
+                    //         ),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.34,
                       child: SizedBox.expand(
                         child: FittedBox(
-                          child: FadeInImage.memoryNetwork(
-                              placeholder: kTransparentImage,
-                              image:
-                                  '${allhistoryposts[index].post!.photos?[2][0]}'),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                '${allhistoryposts[index].post!.photos![2][0]}',
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                    Transform.scale(
+                                        scale: 0.1,
+                                        child: CircularProgressIndicator(
+                                            color: Colors.grey,
+                                            value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -650,27 +703,36 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 130),
-                        child: SpinKitFadingFour(
-                          itemBuilder: (BuildContext context, int index) {
-                            return DecoratedBox(
-                              decoration: BoxDecoration(
-                                color:
-                                    index.isEven ? Colors.white : Colors.grey,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 130),
+                      //   child: SpinKitFadingFour(
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       return DecoratedBox(
+                      //         decoration: BoxDecoration(
+                      //           color:
+                      //               index.isEven ? Colors.white : Colors.grey,
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.34,
                         child: SizedBox.expand(
                           child: FittedBox(
-                            child: FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
-                                image:
-                                    '${allhistoryposts[index].post!.photos![2][0]}'),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  '${allhistoryposts[index].post!.photos![2][0]}',
+                              progressIndicatorBuilder: (context, url,
+                                      downloadProgress) =>
+                                  Transform.scale(
+                                      scale: 0.1,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.grey,
+                                          value: downloadProgress.progress)),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -758,32 +820,45 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                                 child: Stack(
                                   alignment: Alignment.bottomCenter,
                                   children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 130),
-                                      child: SpinKitFadingFour(
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return DecoratedBox(
-                                            decoration: BoxDecoration(
-                                              color: index.isEven
-                                                  ? Colors.white
-                                                  : Colors.grey,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
+                                    // Padding(
+                                    //   padding:
+                                    //       const EdgeInsets.only(bottom: 130),
+                                    //   child: SpinKitFadingFour(
+                                    //     itemBuilder:
+                                    //         (BuildContext context, int index) {
+                                    //       return DecoratedBox(
+                                    //         decoration: BoxDecoration(
+                                    //           color: index.isEven
+                                    //               ? Colors.white
+                                    //               : Colors.grey,
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //   ),
+                                    // ),
                                     Container(
                                       height:
                                           MediaQuery.of(context).size.height *
                                               0.34,
                                       child: SizedBox.expand(
                                         child: FittedBox(
-                                          child: FadeInImage.memoryNetwork(
-                                              placeholder: kTransparentImage,
-                                              image:
-                                                  '${allhistoryposts[index].post!.photos![3][0]}'),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                '${allhistoryposts[index].post!.photos![3][0]}',
+                                            progressIndicatorBuilder: (context,
+                                                    url, downloadProgress) =>
+                                                Transform.scale(
+                                                    scale: 0.1,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            color: Colors.grey,
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress)),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
+                                          ),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -987,9 +1062,10 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                     BlocProvider.of<PostsCubit>(context).getchoiceshistory(
                         globals.main_user.sId, current_page,
                         refresh: true);
-                    controller.animateToPage(Page_View_Index,
-                        curve: Curves.decelerate,
-                        duration: Duration(milliseconds: 300));
+                    // controller.animateToPage(Page_View_Index,
+                    //     curve: Curves.decelerate,
+                    //     duration: Duration(milliseconds: 300));
+                    allhistoryposts.clear();
                   }
                 },
                 child: Icon(

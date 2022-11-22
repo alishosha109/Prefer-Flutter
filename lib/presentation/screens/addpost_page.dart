@@ -128,11 +128,11 @@ class _AddPostState extends State<AddPost> {
                       color: globals.theme_mode == ThemeMode.dark
                           ? Colors.white
                           : Colors.black,
-                      fontSize: 18),
+                      fontSize: 16),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 15),
+                padding: const EdgeInsets.only(right: 8.0),
                 child: InkWell(
                   onTap: () {
                     setState(() {

@@ -56,21 +56,11 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child:
-                    buildUserInfoDisplay("${main_user.username}", 'Username'),
-              ),
-              SizedBox(
-                height: 10.0,
-                child: new Center(
-                  child: new Container(
-                    margin:
-                        new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
-                    height: 1.0,
-                    color: Colors.grey,
-                  ),
+                child: buildUserInfoDisplay(
+                  "${main_user.username}",
+                  AppLocalizations.of(context)!.translate("Username"),
                 ),
               ),
-              buildUserInfoDisplay("${main_user.phoneNumber}", 'Phone number'),
               SizedBox(
                 height: 10.0,
                 child: new Center(
@@ -83,7 +73,25 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               buildUserInfoDisplay(
-                  "${main_user.reports}", 'Times you have been reported'),
+                "${main_user.phoneNumber}",
+                AppLocalizations.of(context)!.translate("Phone Number"),
+              ),
+              SizedBox(
+                height: 10.0,
+                child: new Center(
+                  child: new Container(
+                    margin:
+                        new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                    height: 1.0,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+              buildUserInfoDisplay(
+                "${main_user.reports}",
+                AppLocalizations.of(context)!
+                    .translate("Times you have been reported"),
+              ),
               buildWarning(),
               SizedBox(
                 height: 10.0,
@@ -97,7 +105,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               buildUserInfoDisplay(
-                  "${main_user.blocked == false ? "No" : "Yes"}", "Blocked: "),
+                  "${main_user.blocked == false ? AppLocalizations.of(context)!.translate("No") : AppLocalizations.of(context)!.translate("Yes")}",
+                  AppLocalizations.of(context)!.translate("Blocked")),
               SizedBox(
                 height: 10.0,
                 child: new Center(
@@ -254,7 +263,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   AppLocalizations.of(context)!.translate(
-                      "If  your reports exceeded 50 you will be permanently banned"),
+                      "If your reports exceeded 50 you will be permanently banned"),
                   overflow: TextOverflow.clip,
                   style: TextStyle(
                     fontSize: 10,
