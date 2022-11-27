@@ -56,5 +56,6 @@
     "Times you have been reported":"عدد مرات الإبلاغ عنك",
     "Blocked":"ممنوع من النشر",
     "Yes":"نعم",
-    "No":"لا"
+    "No":"لا",
+    "Can't upload more than 4 photos":"لا يمكن تحميل أكثر من 4 صور"
 }

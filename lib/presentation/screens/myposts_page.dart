@@ -141,70 +141,67 @@ class _MyPostsPageState extends State<MyPostsPage> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.36,
       width: MediaQuery.of(context).size.width * 0.5,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 15),
-        child: Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Container(
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.only(bottom: 130),
-                  //   child: SpinKitFadingFour(
-                  //     itemBuilder: (BuildContext context, int index) {
-                  //       return DecoratedBox(
-                  //         decoration: BoxDecoration(
-                  //           color: index.isEven ? Colors.white : Colors.grey,
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-                  Column(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.33,
-                        child: SizedBox.expand(
-                          child: FittedBox(
-                            child: CachedNetworkImage(
-                              imageUrl: '${myposts[index].photos![0][0]}',
-                              progressIndicatorBuilder: (context, url,
-                                      downloadProgress) =>
-                                  Transform.scale(
-                                      scale: 0.1,
-                                      child: CircularProgressIndicator(
-                                          color: Colors.grey,
-                                          value: downloadProgress.progress)),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
-                            fit: BoxFit.cover,
+      child: Container(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 130),
+                //   child: SpinKitFadingFour(
+                //     itemBuilder: (BuildContext context, int index) {
+                //       return DecoratedBox(
+                //         decoration: BoxDecoration(
+                //           color: index.isEven ? Colors.white : Colors.grey,
+                //         ),
+                //       );
+                //     },
+                //   ),
+                // ),
+                Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.36,
+                      child: SizedBox.expand(
+                        child: FittedBox(
+                          child: CachedNetworkImage(
+                            imageUrl: '${myposts[index].photos![0][0]}',
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                    Transform.scale(
+                                        scale: 0.1,
+                                        child: CircularProgressIndicator(
+                                            color: Colors.grey,
+                                            value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
                           ),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ],
-                  ),
-                  Container(
-                    child: Align(
-                        child: Text(
-                      "${myposts[index].photos![0][1]} %",
-                      style: TextStyle(
-                          //fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontFamily: 'lone'),
-                    )),
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height *
-                        0.34 *
-                        int.parse(myposts[index].photos![0][1]) /
-                        100,
-                    color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
-                  )
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                Container(
+                  child: Align(
+                      child: Text(
+                    "${myposts[index].photos![0][1]} % (${((int.parse(myposts[index].photos![0][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
+                    style: TextStyle(
+                        //fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontFamily: 'lone'),
+                  )),
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height *
+                      0.36 *
+                      int.parse(myposts[index].photos![0][1]) /
+                      100,
+                  color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
+                )
+              ],
             ),
           ),
         ),
@@ -216,66 +213,61 @@ class _MyPostsPageState extends State<MyPostsPage> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.36,
       width: MediaQuery.of(context).size.width * 0.5,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 15, 8, 8),
-        child: Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Container(
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.only(bottom: 130),
-                  //   child: SpinKitFadingFour(
-                  //     itemBuilder: (BuildContext context, int index) {
-                  //       return DecoratedBox(
-                  //         decoration: BoxDecoration(
-                  //           color: index.isEven ? Colors.white : Colors.grey,
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.36,
-                    child: SizedBox.expand(
-                      child: FittedBox(
-                        child: CachedNetworkImage(
-                          imageUrl: '${myposts[index].photos![1][0]}',
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) =>
-                                  Transform.scale(
-                                      scale: 0.1,
-                                      child: CircularProgressIndicator(
-                                          color: Colors.grey,
-                                          value: downloadProgress.progress)),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        ),
-                        fit: BoxFit.cover,
+      child: Container(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 130),
+                //   child: SpinKitFadingFour(
+                //     itemBuilder: (BuildContext context, int index) {
+                //       return DecoratedBox(
+                //         decoration: BoxDecoration(
+                //           color: index.isEven ? Colors.white : Colors.grey,
+                //         ),
+                //       );
+                //     },
+                //   ),
+                // ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.36,
+                  child: SizedBox.expand(
+                    child: FittedBox(
+                      child: CachedNetworkImage(
+                        imageUrl: '${myposts[index].photos![1][0]}',
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) => Transform.scale(
+                                scale: 0.1,
+                                child: CircularProgressIndicator(
+                                    color: Colors.grey,
+                                    value: downloadProgress.progress)),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  Container(
-                    child: Align(
-                        child: Text(
-                      "${myposts[index].photos![1][1]} %",
-                      style: TextStyle(
-                          //fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontFamily: 'lone'),
-                    )),
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height *
-                        0.34 *
-                        int.parse(myposts[index].photos![1][1]) /
-                        100,
-                    color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
-                  )
-                ],
-              ),
+                ),
+                Container(
+                  child: Align(
+                      child: Text(
+                    "${myposts[index].photos![1][1]} % (${((int.parse(myposts[index].photos![1][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
+                    style: TextStyle(
+                        //fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontFamily: 'lone'),
+                  )),
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height *
+                      0.36 *
+                      int.parse(myposts[index].photos![1][1]) /
+                      100,
+                  color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
+                )
+              ],
             ),
           ),
         ),
@@ -349,11 +341,11 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                   Container(
                                     child: Align(
                                         child: Text(
-                                      "${myposts[index].photos![0][1]} %",
+                                      "${myposts[index].photos![0][1]} % (${((int.parse(myposts[index].photos![0][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
                                       style: TextStyle(
                                           //fontWeight: FontWeight.bold,
                                           color: Colors.white,
-                                          fontSize: 20,
+                                          fontSize: 15,
                                           fontFamily: 'lone'),
                                     )),
                                     width: double.infinity,
@@ -429,11 +421,11 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                   Container(
                                     child: Align(
                                         child: Text(
-                                      "${myposts[index].photos![1][1]} %",
+                                      "${myposts[index].photos![1][1]} % (${((int.parse(myposts[index].photos![1][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
                                       style: TextStyle(
                                           //fontWeight: FontWeight.bold,
                                           color: Colors.white,
-                                          fontSize: 20,
+                                          fontSize: 15,
                                           fontFamily: 'lone'),
                                     )),
                                     width: double.infinity,
@@ -515,11 +507,11 @@ class _MyPostsPageState extends State<MyPostsPage> {
                   Container(
                     child: Align(
                         child: Text(
-                      "${myposts[index].photos![2][1]} %",
+                      "${myposts[index].photos![2][1]} % (${((int.parse(myposts[index].photos![2][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
                       style: TextStyle(
                           //fontWeight: FontWeight.bold,
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 15,
                           fontFamily: 'lone'),
                     )),
                     width: double.infinity,
@@ -585,11 +577,11 @@ class _MyPostsPageState extends State<MyPostsPage> {
                     Container(
                       child: Align(
                           child: Text(
-                        "${myposts[index].photos![2][1]} %",
+                        "${myposts[index].photos![2][1]} % (${((int.parse(myposts[index].photos![2][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
                         style: TextStyle(
                             //fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 15,
                             fontFamily: 'lone'),
                       )),
                       width: double.infinity,
@@ -675,11 +667,11 @@ class _MyPostsPageState extends State<MyPostsPage> {
                                   Container(
                                     child: Align(
                                         child: Text(
-                                      "${myposts[index].photos![3][1]} %",
+                                      "${myposts[index].photos![3][1]} % (${((int.parse(myposts[index].photos![3][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
                                       style: TextStyle(
                                           //fontWeight: FontWeight.bold,
                                           color: Colors.white,
-                                          fontSize: 20,
+                                          fontSize: 15,
                                           fontFamily: 'lone'),
                                     )),
                                     width: double.infinity,

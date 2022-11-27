@@ -81,6 +81,8 @@ class MyPostsRefresh extends PostsState {
   );
 }
 
+class Choice_Loading extends PostsState {}
+
 class historypostsLoading extends PostsState {
   final bool loading;
 

@@ -153,6 +153,7 @@ class PostsCubit extends Cubit<PostsState> {
   }
 
   List<dynamic> getPercentages(postId, choice, index) {
+    emit(Choice_Loading());
     postsrepo.getPercentages(postId, choice).then((percs) {
       emit(percsLoaded(percs, index));
       this.percs.add(percs);

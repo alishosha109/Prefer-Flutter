@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   Map<int, int> chs = {};
   List<String> reported_ids = [];
   bool loading = true;
+  bool choice_loading = false;
   int current_page = 1;
   int Page_View_Index = 0;
   bool _showPreview = false;
@@ -81,7 +82,10 @@ class _HomePageState extends State<HomePage> {
         loading = false;
       } else if (state is percsLoaded) {
         percs[state.index] = state.percs;
+        choice_loading = false;
         print(percs);
+      } else if (state is Choice_Loading) {
+        choice_loading = true;
       } else if (state is MorePostsLoaded) {
         allposts.addAll(state.posts);
       } else if (state is PostsRefresh) {
@@ -157,7 +161,7 @@ class _HomePageState extends State<HomePage> {
       height: MediaQuery.of(context).size.height * 0.36,
       width: MediaQuery.of(context).size.width * 0.5,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 15),
+        padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
         child: Container(
           decoration: chs[index] == 0
               ? BoxDecoration(
@@ -239,32 +243,38 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       globals.usertype == "user"
-                          ? AnimatedOpacity(
-                              opacity: percs.containsKey(index) ? 1.0 : 0.0,
-                              duration: const Duration(milliseconds: 500),
-                              child: Container(
-                                child: percs.containsKey(index)
-                                    ? Align(
-                                        child: Text(
-                                        "${percs[index]![0][1]} % (${((int.parse(percs[index]![0][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
-                                        style: TextStyle(
-                                            //fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontFamily: 'lone'),
-                                      ))
-                                    : Text(""),
-                                width: double.infinity,
-                                height: percs.containsKey(index)
-                                    ? MediaQuery.of(context).size.height *
-                                        0.34 *
-                                        int.parse(percs[index]![0][1]) /
-                                        100
-                                    : 0,
-                                color: Color.fromARGB(255, 13, 81, 1)
-                                    .withOpacity(0.3),
-                              ),
-                            )
+                          ? choice_loading
+                              ? Center(
+                                  child: SpinKitDoubleBounce(
+                                  color: Colors.green,
+                                  size: 50.0,
+                                ))
+                              : AnimatedOpacity(
+                                  opacity: percs.containsKey(index) ? 1.0 : 0.0,
+                                  duration: const Duration(milliseconds: 500),
+                                  child: Container(
+                                    child: percs.containsKey(index)
+                                        ? Align(
+                                            child: Text(
+                                            "${percs[index]![0][1]} % (${((int.parse(percs[index]![0][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
+                                            style: TextStyle(
+                                                //fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontFamily: 'lone'),
+                                          ))
+                                        : Text(""),
+                                    width: double.infinity,
+                                    height: percs.containsKey(index)
+                                        ? MediaQuery.of(context).size.height *
+                                            0.34 *
+                                            int.parse(percs[index]![0][1]) /
+                                            100
+                                        : 0,
+                                    color: Color.fromARGB(255, 13, 81, 1)
+                                        .withOpacity(0.3),
+                                  ),
+                                )
                           : Container()
                     ],
                   ),
@@ -282,7 +292,7 @@ class _HomePageState extends State<HomePage> {
       height: MediaQuery.of(context).size.height * 0.36,
       width: MediaQuery.of(context).size.width * 0.5,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 15, 8, 8),
+        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
         child: Container(
           decoration: chs[index] == 1
               ? BoxDecoration(
@@ -372,32 +382,38 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       globals.usertype == "user"
-                          ? AnimatedOpacity(
-                              opacity: percs.containsKey(index) ? 1.0 : 0.0,
-                              duration: const Duration(milliseconds: 500),
-                              child: Container(
-                                child: percs.containsKey(index)
-                                    ? Align(
-                                        child: Text(
-                                        "${percs[index]![1][1]} % (${((int.parse(percs[index]![1][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
-                                        style: TextStyle(
-                                            //fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontFamily: 'lone'),
-                                      ))
-                                    : Text(""),
-                                width: double.infinity,
-                                height: percs.containsKey(index)
-                                    ? MediaQuery.of(context).size.height *
-                                        0.34 *
-                                        int.parse(percs[index]![1][1]) /
-                                        100
-                                    : 0,
-                                color: Color.fromARGB(255, 13, 81, 1)
-                                    .withOpacity(0.3),
-                              ),
-                            )
+                          ? choice_loading
+                              ? Center(
+                                  child: SpinKitDoubleBounce(
+                                  color: Colors.green,
+                                  size: 50.0,
+                                ))
+                              : AnimatedOpacity(
+                                  opacity: percs.containsKey(index) ? 1.0 : 0.0,
+                                  duration: const Duration(milliseconds: 500),
+                                  child: Container(
+                                    child: percs.containsKey(index)
+                                        ? Align(
+                                            child: Text(
+                                            "${percs[index]![1][1]} % (${((int.parse(percs[index]![1][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
+                                            style: TextStyle(
+                                                //fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontFamily: 'lone'),
+                                          ))
+                                        : Text(""),
+                                    width: double.infinity,
+                                    height: percs.containsKey(index)
+                                        ? MediaQuery.of(context).size.height *
+                                            0.34 *
+                                            int.parse(percs[index]![1][1]) /
+                                            100
+                                        : 0,
+                                    color: Color.fromARGB(255, 13, 81, 1)
+                                        .withOpacity(0.3),
+                                  ),
+                                )
                           : Container()
                     ],
                   ),
@@ -525,38 +541,60 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                                 globals.usertype == "user"
-                                    ? AnimatedOpacity(
-                                        opacity: percs.containsKey(index)
-                                            ? 1.0
-                                            : 0.0,
-                                        duration:
-                                            const Duration(milliseconds: 500),
-                                        child: Container(
-                                          child: percs.containsKey(index)
-                                              ? Align(
-                                                  child: Text(
-                                                  "${percs[index]![0][1]} % (${((int.parse(percs[index]![0][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
-                                                  style: TextStyle(
-                                                      //fontWeight: FontWeight.bold,
-                                                      color: Colors.white,
-                                                      fontSize: 15,
-                                                      fontFamily: 'lone'),
-                                                ))
-                                              : Text(""),
-                                          width: double.infinity,
-                                          height: percs.containsKey(index)
-                                              ? MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.34 *
-                                                  int.parse(
-                                                      percs[index]![0][1]) /
-                                                  100
-                                              : 0,
-                                          color: Color.fromARGB(255, 13, 81, 1)
-                                              .withOpacity(0.3),
-                                        ),
-                                      )
+                                    ? choice_loading
+                                        ? Center(
+                                            child: Transform.scale(
+                                                scale: 0.1,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.green,
+                                                )),
+                                          )
+                                        : choice_loading
+                                            ? Center(
+                                                child: SpinKitDoubleBounce(
+                                                color: Colors.green,
+                                                size: 50.0,
+                                              ))
+                                            : AnimatedOpacity(
+                                                opacity:
+                                                    percs.containsKey(index)
+                                                        ? 1.0
+                                                        : 0.0,
+                                                duration: const Duration(
+                                                    milliseconds: 500),
+                                                child: Container(
+                                                  child: percs
+                                                          .containsKey(index)
+                                                      ? Align(
+                                                          child: Text(
+                                                          "${percs[index]![0][1]} % (${((int.parse(percs[index]![0][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
+                                                          style: TextStyle(
+                                                              //fontWeight: FontWeight.bold,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 15,
+                                                              fontFamily:
+                                                                  'lone'),
+                                                        ))
+                                                      : Text(""),
+                                                  width: double.infinity,
+                                                  height: percs
+                                                          .containsKey(index)
+                                                      ? MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.34 *
+                                                          int.parse(
+                                                              percs[index]![0]
+                                                                  [1]) /
+                                                          100
+                                                      : 0,
+                                                  color: Color.fromARGB(
+                                                          255, 13, 81, 1)
+                                                      .withOpacity(0.3),
+                                                ),
+                                              )
                                     : Container()
                               ],
                             ),
@@ -675,39 +713,46 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   globals.usertype == "user"
-                                      ? AnimatedOpacity(
-                                          opacity: percs.containsKey(index)
-                                              ? 1.0
-                                              : 0.0,
-                                          duration:
-                                              const Duration(milliseconds: 500),
-                                          child: Container(
-                                            child: percs.containsKey(index)
-                                                ? Align(
-                                                    child: Text(
-                                                    "${percs[index]![1][1]} % (${((int.parse(percs[index]![1][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
-                                                    style: TextStyle(
-                                                        //fontWeight: FontWeight.bold,
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                        fontFamily: 'lone'),
-                                                  ))
-                                                : Text(""),
-                                            width: double.infinity,
-                                            height: percs.containsKey(index)
-                                                ? MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.34 *
-                                                    int.parse(
-                                                        percs[index]![1][1]) /
-                                                    100
-                                                : 0,
-                                            color:
-                                                Color.fromARGB(255, 13, 81, 1)
+                                      ? choice_loading
+                                          ? Center(
+                                              child: SpinKitDoubleBounce(
+                                              color: Colors.green,
+                                              size: 50.0,
+                                            ))
+                                          : AnimatedOpacity(
+                                              opacity: percs.containsKey(index)
+                                                  ? 1.0
+                                                  : 0.0,
+                                              duration: const Duration(
+                                                  milliseconds: 500),
+                                              child: Container(
+                                                child: percs.containsKey(index)
+                                                    ? Align(
+                                                        child: Text(
+                                                        "${percs[index]![1][1]} % (${((int.parse(percs[index]![1][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
+                                                        style: TextStyle(
+                                                            //fontWeight: FontWeight.bold,
+                                                            color: Colors.white,
+                                                            fontSize: 16,
+                                                            fontFamily: 'lone'),
+                                                      ))
+                                                    : Text(""),
+                                                width: double.infinity,
+                                                height: percs.containsKey(index)
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.34 *
+                                                        int.parse(
+                                                            percs[index]![1]
+                                                                [1]) /
+                                                        100
+                                                    : 0,
+                                                color: Color.fromARGB(
+                                                        255, 13, 81, 1)
                                                     .withOpacity(0.3),
-                                          ),
-                                        )
+                                              ),
+                                            )
                                       : Container()
                                 ],
                               ),
@@ -819,32 +864,38 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       globals.usertype == "user"
-                          ? AnimatedOpacity(
-                              opacity: percs.containsKey(index) ? 1.0 : 0.0,
-                              duration: const Duration(milliseconds: 500),
-                              child: Container(
-                                child: percs.containsKey(index)
-                                    ? Align(
-                                        child: Text(
-                                        "${percs[index]![2][1]} % (${((int.parse(percs[index]![2][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
-                                        style: TextStyle(
-                                            //fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontFamily: 'lone'),
-                                      ))
-                                    : Text(""),
-                                width: double.infinity,
-                                height: percs.containsKey(index)
-                                    ? MediaQuery.of(context).size.height *
-                                        0.34 *
-                                        int.parse(percs[index]![2][1]) /
-                                        100
-                                    : 0,
-                                color: Color.fromARGB(255, 13, 81, 1)
-                                    .withOpacity(0.3),
-                              ),
-                            )
+                          ? choice_loading
+                              ? Center(
+                                  child: SpinKitDoubleBounce(
+                                  color: Colors.green,
+                                  size: 50.0,
+                                ))
+                              : AnimatedOpacity(
+                                  opacity: percs.containsKey(index) ? 1.0 : 0.0,
+                                  duration: const Duration(milliseconds: 500),
+                                  child: Container(
+                                    child: percs.containsKey(index)
+                                        ? Align(
+                                            child: Text(
+                                            "${percs[index]![2][1]} % (${((int.parse(percs[index]![2][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
+                                            style: TextStyle(
+                                                //fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontFamily: 'lone'),
+                                          ))
+                                        : Text(""),
+                                    width: double.infinity,
+                                    height: percs.containsKey(index)
+                                        ? MediaQuery.of(context).size.height *
+                                            0.34 *
+                                            int.parse(percs[index]![2][1]) /
+                                            100
+                                        : 0,
+                                    color: Color.fromARGB(255, 13, 81, 1)
+                                        .withOpacity(0.3),
+                                  ),
+                                )
                           : Container()
                     ],
                   ),
@@ -951,31 +1002,39 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         globals.usertype == "user"
-                            ? AnimatedOpacity(
-                                opacity: percs.containsKey(index) ? 1.0 : 0.0,
-                                duration: const Duration(milliseconds: 500),
-                                child: Container(
-                                  child: percs.containsKey(index)
-                                      ? Align(
-                                          child: Text(
-                                          "${percs[index]![2][1]} % (${((int.parse(percs[index]![2][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
-                                          style: TextStyle(
-                                              //fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                              fontFamily: 'lone'),
-                                        ))
-                                      : Text(""),
-                                  width: double.infinity,
-                                  height: percs.containsKey(index)
-                                      ? MediaQuery.of(context).size.height *
-                                          0.34 *
-                                          (int.parse(percs[index]![2][1]) / 100)
-                                      : 0,
-                                  color: Color.fromARGB(255, 13, 81, 1)
-                                      .withOpacity(0.3),
-                                ),
-                              )
+                            ? choice_loading
+                                ? Center(
+                                    child: SpinKitDoubleBounce(
+                                    color: Colors.green,
+                                    size: 50.0,
+                                  ))
+                                : AnimatedOpacity(
+                                    opacity:
+                                        percs.containsKey(index) ? 1.0 : 0.0,
+                                    duration: const Duration(milliseconds: 500),
+                                    child: Container(
+                                      child: percs.containsKey(index)
+                                          ? Align(
+                                              child: Text(
+                                              "${percs[index]![2][1]} % (${((int.parse(percs[index]![2][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
+                                              style: TextStyle(
+                                                  //fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  fontSize: 15,
+                                                  fontFamily: 'lone'),
+                                            ))
+                                          : Text(""),
+                                      width: double.infinity,
+                                      height: percs.containsKey(index)
+                                          ? MediaQuery.of(context).size.height *
+                                              0.34 *
+                                              (int.parse(percs[index]![2][1]) /
+                                                  100)
+                                          : 0,
+                                      color: Color.fromARGB(255, 13, 81, 1)
+                                          .withOpacity(0.3),
+                                    ),
+                                  )
                             : Container()
                       ],
                     ),
@@ -1105,39 +1164,46 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   globals.usertype == "user"
-                                      ? AnimatedOpacity(
-                                          opacity: percs.containsKey(index)
-                                              ? 1.0
-                                              : 0.0,
-                                          duration:
-                                              const Duration(milliseconds: 500),
-                                          child: Container(
-                                            child: percs.containsKey(index)
-                                                ? Align(
-                                                    child: Text(
-                                                    "${percs[index]![3][1]} % (${((int.parse(percs[index]![3][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
-                                                    style: TextStyle(
-                                                        //fontWeight: FontWeight.bold,
-                                                        color: Colors.white,
-                                                        fontSize: 15,
-                                                        fontFamily: 'lone'),
-                                                  ))
-                                                : Text(""),
-                                            width: double.infinity,
-                                            height: percs.containsKey(index)
-                                                ? MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.34 *
-                                                    int.parse(
-                                                        percs[index]![3][1]) /
-                                                    100
-                                                : 0,
-                                            color:
-                                                Color.fromARGB(255, 13, 81, 1)
+                                      ? choice_loading
+                                          ? Center(
+                                              child: SpinKitDoubleBounce(
+                                              color: Colors.green,
+                                              size: 50.0,
+                                            ))
+                                          : AnimatedOpacity(
+                                              opacity: percs.containsKey(index)
+                                                  ? 1.0
+                                                  : 0.0,
+                                              duration: const Duration(
+                                                  milliseconds: 500),
+                                              child: Container(
+                                                child: percs.containsKey(index)
+                                                    ? Align(
+                                                        child: Text(
+                                                        "${percs[index]![3][1]} % (${((int.parse(percs[index]![3][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
+                                                        style: TextStyle(
+                                                            //fontWeight: FontWeight.bold,
+                                                            color: Colors.white,
+                                                            fontSize: 15,
+                                                            fontFamily: 'lone'),
+                                                      ))
+                                                    : Text(""),
+                                                width: double.infinity,
+                                                height: percs.containsKey(index)
+                                                    ? MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.34 *
+                                                        int.parse(
+                                                            percs[index]![3]
+                                                                [1]) /
+                                                        100
+                                                    : 0,
+                                                color: Color.fromARGB(
+                                                        255, 13, 81, 1)
                                                     .withOpacity(0.3),
-                                          ),
-                                        )
+                                              ),
+                                            )
                                       : Container()
                                 ],
                               ),

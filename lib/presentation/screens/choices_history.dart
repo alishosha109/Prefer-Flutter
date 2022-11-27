@@ -121,7 +121,7 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
       height: MediaQuery.of(context).size.height * 0.37,
       width: MediaQuery.of(context).size.width * 0.5,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 15),
+        padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
         child: Container(
           decoration: allhistoryposts[index].choice == 0
               ? BoxDecoration(
@@ -182,12 +182,12 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                       child: Container(
                         child: Align(
                             child: Text(
-                          "${allhistoryposts[index].post!.photos![0][1]} %",
+                          "${allhistoryposts[index].post!.photos![0][1]} % (${((int.parse(allhistoryposts[index].post!.photos![0][1]) / 100) * (allhistoryposts[index].post!.totalAnswers!)).toInt()})",
                           style: TextStyle(
-                            //fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
+                              //fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontFamily: 'lone'),
                         )),
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height *
@@ -213,7 +213,7 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
       height: MediaQuery.of(context).size.height * 0.36,
       width: MediaQuery.of(context).size.width * 0.5,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 14, 8, 8),
+        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
         child: Container(
           decoration: allhistoryposts[index].choice == 1
               ? BoxDecoration(
@@ -283,12 +283,12 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                       child: Container(
                         child: Align(
                             child: Text(
-                          "${allhistoryposts[index].post!.photos![1][1]} %",
+                          "${allhistoryposts[index].post!.photos![1][1]} % (${((int.parse(allhistoryposts[index].post!.photos![1][1]) / 100) * (allhistoryposts[index].post!.totalAnswers!)).toInt()})",
                           style: TextStyle(
-                            //fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
+                              //fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontFamily: 'lone'),
                         )),
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height *
@@ -408,12 +408,12 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                                       child: Container(
                                         child: Align(
                                             child: Text(
-                                          "${allhistoryposts[index].post!.photos![0][1]} %",
+                                          "${allhistoryposts[index].post!.photos![0][1]} % (${((int.parse(allhistoryposts[index].post!.photos![0][1]) / 100) * (allhistoryposts[index].post!.totalAnswers!)).toInt()})",
                                           style: TextStyle(
-                                            //fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
+                                              //fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontFamily: 'lone'),
                                         )),
                                         width: double.infinity,
                                         height:
@@ -443,7 +443,7 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          decoration: chs[index] == 1
+                          decoration: allhistoryposts[index].choice == 1
                               ? BoxDecoration(
                                   border: Border.all(
                                       width: 5,
@@ -525,12 +525,12 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                                       child: Container(
                                         child: Align(
                                             child: Text(
-                                          "${allhistoryposts[index].post!.photos![1][1]} %",
+                                          "${allhistoryposts[index].post!.photos![1][1]} % (${((int.parse(allhistoryposts[index].post!.photos![1][1]) / 100) * (allhistoryposts[index].post!.totalAnswers!)).toInt()})",
                                           style: TextStyle(
-                                            //fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
+                                              //fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontFamily: 'lone'),
                                         )),
                                         width: double.infinity,
                                         height:
@@ -642,12 +642,12 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                       child: Container(
                         child: Align(
                             child: Text(
-                          "${allhistoryposts[index].post!.photos![2][1]} %",
+                          "${allhistoryposts[index].post!.photos![2][1]} % (${((int.parse(allhistoryposts[index].post!.photos![2][1]) / 100) * (allhistoryposts[index].post!.totalAnswers!)).toInt()})",
                           style: TextStyle(
-                            //fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
+                              //fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontFamily: 'lone'),
                         )),
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height *
@@ -743,12 +743,12 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                         child: Container(
                           child: Align(
                               child: Text(
-                            "${allhistoryposts[index].post!.photos![2][1]} %",
+                            "${allhistoryposts[index].post!.photos![2][1]} % (${((int.parse(allhistoryposts[index].post!.photos![2][1]) / 100) * (allhistoryposts[index].post!.totalAnswers!)).toInt()})",
                             style: TextStyle(
-                              //fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
+                                //fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontFamily: 'lone'),
                           )),
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height *
@@ -870,12 +870,12 @@ class _ChoicesHistoryPageState extends State<ChoicesHistoryPage> {
                                       child: Container(
                                         child: Align(
                                             child: Text(
-                                          "${allhistoryposts[index].post!.photos![3][1]} %",
+                                          "${allhistoryposts[index].post!.photos![3][1]} % (${((int.parse(allhistoryposts[index].post!.photos![3][1]) / 100) * (allhistoryposts[index].post!.totalAnswers!)).toInt()})",
                                           style: TextStyle(
-                                            //fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
+                                              //fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontFamily: 'lone'),
                                         )),
                                         width: double.infinity,
                                         height:

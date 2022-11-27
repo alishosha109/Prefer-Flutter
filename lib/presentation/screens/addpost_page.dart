@@ -38,7 +38,20 @@ class _AddPostState extends State<AddPost> {
         });
       } else {
         setState(() {
-          imageFileList!.addAll(selectedImages);
+          if (selectedImages.length + imageFileList!.length > 4) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                duration: const Duration(seconds: 3),
+                content: Text(
+                  AppLocalizations.of(context)!
+                      .translate("Can't upload more than 4 photos"),
+                ),
+                backgroundColor: Colors.grey.withOpacity(0.5),
+              ),
+            );
+          } else {
+            imageFileList!.addAll(selectedImages);
+          }
         });
       }
     } else {
