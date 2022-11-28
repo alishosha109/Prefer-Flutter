@@ -13,12 +13,10 @@ import 'package:Prefer/constants/globals.dart' as globals;
 import 'package:flutter_offline/flutter_offline.dart';
 import '../../data/models/post.dart';
 import 'package:draggable_fab/draggable_fab.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'dart:ui';
 import 'package:vibration/vibration.dart';
-import 'package:language_picker/language_picker.dart';
 import 'package:language_picker/languages.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -35,8 +33,9 @@ class HexColor extends Color {
 }
 
 class HomePage extends StatefulWidget {
-  final String usertype;
-  HomePage({Key? key, required this.usertype}) : super(key: key);
+  HomePage({
+    Key? key,
+  }) : super(key: key);
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -62,13 +61,8 @@ class _HomePageState extends State<HomePage> {
     Languages.japanese,
     Languages.korean,
   ];
-  @override
-  void initState() {
-    super.initState();
-  }
 
   Widget buildBlocWidget() {
-    print(globals.usertype);
     if (globals.usertype == "user") {
       BlocProvider.of<PostsCubit>(context)
           .getAllPosts(globals.main_user.sId, current_page);
@@ -83,7 +77,6 @@ class _HomePageState extends State<HomePage> {
       } else if (state is percsLoaded) {
         percs[state.index] = state.percs;
         choice_loading = false;
-        print(percs);
       } else if (state is Choice_Loading) {
         choice_loading = true;
       } else if (state is MorePostsLoaded) {
@@ -208,19 +201,6 @@ class _HomePageState extends State<HomePage> {
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      // Padding(
-                      //   padding: const EdgeInsets.only(bottom: 130),
-                      //   child: SpinKitFadingFour(
-                      //     itemBuilder: (BuildContext context, int index) {
-                      //       return DecoratedBox(
-                      //         decoration: BoxDecoration(
-                      //           color:
-                      //               index.isEven ? Colors.white : Colors.grey,
-                      //         ),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.36,
                         child: SizedBox.expand(
@@ -241,7 +221,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-
                       globals.usertype == "user"
                           ? choice_loading
                               ? Center(
@@ -306,7 +285,6 @@ class _HomePageState extends State<HomePage> {
               onLongPress: () {
                 Vibration.vibrate(duration: 200);
 
-                print(_showPreview);
                 BlocProvider.of<PostsCubit>(context)
                     .viewphoto(true, allposts[index].photos![1][0]);
                 // setState(() {
@@ -315,7 +293,6 @@ class _HomePageState extends State<HomePage> {
                 // });
               },
               onLongPressUp: () {
-                print(_showPreview);
                 BlocProvider.of<PostsCubit>(context).viewphoto(false, "");
                 // setState(() {
                 //   _showPreview = false;
@@ -449,22 +426,13 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(15),
                         child: GestureDetector(
                           onLongPress: () async {
-                            print(_showPreview);
                             Vibration.vibrate(duration: 200);
                             BlocProvider.of<PostsCubit>(context)
                                 .viewphoto(true, allposts[index].photos![0][0]);
-                            // setState(() {
-                            //   _showPreview = true;
-                            //   _image = allposts[index].photos![0][0].toString();
-                            // });
                           },
                           onLongPressUp: () {
-                            print(_showPreview);
                             BlocProvider.of<PostsCubit>(context)
                                 .viewphoto(false, "");
-                            // setState(() {
-                            //   _showPreview = false;
-                            // });
                           },
                           onTap: percs.containsKey(index)
                               ? null
@@ -494,107 +462,75 @@ class _HomePageState extends State<HomePage> {
                             child: Stack(
                               alignment: Alignment.bottomCenter,
                               children: [
-                                // Padding(
-                                //   padding: const EdgeInsets.only(bottom: 130),
-                                //   child: SpinKitFadingFour(
-                                //     itemBuilder:
-                                //         (BuildContext context, int index) {
-                                //       return DecoratedBox(
-                                //         decoration: BoxDecoration(
-                                //           color: index.isEven
-                                //               ? Colors.white
-                                //               : Colors.grey,
-                                //         ),
-                                //       );
-                                //     },
-                                //   ),
-                                // ),
-                                Column(
-                                  children: [
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.34,
-                                      child: SizedBox.expand(
-                                        child: FittedBox(
-                                          child: CachedNetworkImage(
-                                            imageUrl:
-                                                '${allposts[index].photos![0][0]}',
-                                            progressIndicatorBuilder: (context,
-                                                    url, downloadProgress) =>
-                                                Transform.scale(
-                                                    scale: 0.1,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                            color: Colors.grey,
-                                                            value:
-                                                                downloadProgress
-                                                                    .progress)),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Icon(Icons.error),
-                                          ),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                globals.usertype == "user"
-                                    ? choice_loading
-                                        ? Center(
-                                            child: Transform.scale(
+                                Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.34,
+                                  child: SizedBox.expand(
+                                    child: FittedBox(
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            '${allposts[index].photos![0][0]}',
+                                        progressIndicatorBuilder: (context, url,
+                                                downloadProgress) =>
+                                            Transform.scale(
                                                 scale: 0.1,
                                                 child:
                                                     CircularProgressIndicator(
-                                                  color: Colors.green,
-                                                )),
+                                                        color: Colors.grey,
+                                                        value: downloadProgress
+                                                            .progress)),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                globals.usertype == "user"
+                                    ? choice_loading
+                                        ? Positioned(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.14,
+                                            child: SpinKitDoubleBounce(
+                                              color: Colors.green,
+                                              size: 50.0,
+                                            ),
                                           )
-                                        : choice_loading
-                                            ? Center(
-                                                child: SpinKitDoubleBounce(
-                                                color: Colors.green,
-                                                size: 50.0,
-                                              ))
-                                            : AnimatedOpacity(
-                                                opacity:
-                                                    percs.containsKey(index)
-                                                        ? 1.0
-                                                        : 0.0,
-                                                duration: const Duration(
-                                                    milliseconds: 500),
-                                                child: Container(
-                                                  child: percs
-                                                          .containsKey(index)
-                                                      ? Align(
-                                                          child: Text(
-                                                          "${percs[index]![0][1]} % (${((int.parse(percs[index]![0][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
-                                                          style: TextStyle(
-                                                              //fontWeight: FontWeight.bold,
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 15,
-                                                              fontFamily:
-                                                                  'lone'),
-                                                        ))
-                                                      : Text(""),
-                                                  width: double.infinity,
-                                                  height: percs
-                                                          .containsKey(index)
-                                                      ? MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.34 *
-                                                          int.parse(
-                                                              percs[index]![0]
-                                                                  [1]) /
-                                                          100
-                                                      : 0,
-                                                  color: Color.fromARGB(
-                                                          255, 13, 81, 1)
+                                        : AnimatedOpacity(
+                                            opacity: percs.containsKey(index)
+                                                ? 1.0
+                                                : 0.0,
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            child: Container(
+                                              child: percs.containsKey(index)
+                                                  ? Align(
+                                                      child: Text(
+                                                      "${percs[index]![0][1]} % (${((int.parse(percs[index]![0][1]) / 100) * (allposts[index].totalAnswers! + 1)).toInt()})",
+                                                      style: TextStyle(
+                                                          //fontWeight: FontWeight.bold,
+                                                          color: Colors.white,
+                                                          fontSize: 15,
+                                                          fontFamily: 'lone'),
+                                                    ))
+                                                  : Text(""),
+                                              width: double.infinity,
+                                              height: percs.containsKey(index)
+                                                  ? MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.34 *
+                                                      int.parse(
+                                                          percs[index]![0][1]) /
+                                                      100
+                                                  : 0,
+                                              color:
+                                                  Color.fromARGB(255, 13, 81, 1)
                                                       .withOpacity(0.3),
-                                                ),
-                                              )
+                                            ),
+                                          )
                                     : Container()
                               ],
                             ),
@@ -625,7 +561,6 @@ class _HomePageState extends State<HomePage> {
                           onLongPress: () {
                             Vibration.vibrate(duration: 200);
 
-                            print(_showPreview);
                             BlocProvider.of<PostsCubit>(context)
                                 .viewphoto(true, allposts[index].photos![1][0]);
                             // setState(() {
@@ -634,7 +569,6 @@ class _HomePageState extends State<HomePage> {
                             // });
                           },
                           onLongPressUp: () {
-                            print(_showPreview);
                             BlocProvider.of<PostsCubit>(context)
                                 .viewphoto(false, "");
                             // setState(() {
@@ -714,11 +648,16 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   globals.usertype == "user"
                                       ? choice_loading
-                                          ? Center(
+                                          ? Positioned(
+                                              top: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.14,
                                               child: SpinKitDoubleBounce(
-                                              color: Colors.green,
-                                              size: 50.0,
-                                            ))
+                                                color: Colors.green,
+                                                size: 50.0,
+                                              ),
+                                            )
                                           : AnimatedOpacity(
                                               opacity: percs.containsKey(index)
                                                   ? 1.0
@@ -786,7 +725,6 @@ class _HomePageState extends State<HomePage> {
             borderRadius: BorderRadius.circular(15),
             child: GestureDetector(
               onLongPress: () {
-                print(_showPreview);
                 Vibration.vibrate(duration: 200);
 
                 BlocProvider.of<PostsCubit>(context)
@@ -797,7 +735,6 @@ class _HomePageState extends State<HomePage> {
                 // });
               },
               onLongPressUp: () {
-                print(_showPreview);
                 BlocProvider.of<PostsCubit>(context).viewphoto(false, "");
                 // setState(() {
                 //   _showPreview = false;
@@ -830,19 +767,6 @@ class _HomePageState extends State<HomePage> {
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      // Padding(
-                      //   padding: const EdgeInsets.only(bottom: 130),
-                      //   child: SpinKitFadingFour(
-                      //     itemBuilder: (BuildContext context, int index) {
-                      //       return DecoratedBox(
-                      //         decoration: BoxDecoration(
-                      //           color:
-                      //               index.isEven ? Colors.white : Colors.grey,
-                      //         ),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.34,
                         child: SizedBox.expand(
@@ -926,7 +850,6 @@ class _HomePageState extends State<HomePage> {
                 onLongPress: () {
                   Vibration.vibrate(duration: 200);
 
-                  print(_showPreview);
                   BlocProvider.of<PostsCubit>(context)
                       .viewphoto(true, allposts[index].photos![2][0]);
                   // setState(() {
@@ -935,7 +858,6 @@ class _HomePageState extends State<HomePage> {
                   // });
                 },
                 onLongPressUp: () {
-                  print(_showPreview);
                   BlocProvider.of<PostsCubit>(context).viewphoto(false, "");
                   // setState(() {
                   //   _showPreview = false;
@@ -1003,11 +925,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                         globals.usertype == "user"
                             ? choice_loading
-                                ? Center(
+                                ? Positioned(
+                                    top: MediaQuery.of(context).size.height *
+                                        0.14,
                                     child: SpinKitDoubleBounce(
-                                    color: Colors.green,
-                                    size: 50.0,
-                                  ))
+                                      color: Colors.green,
+                                      size: 50.0,
+                                    ),
+                                  )
                                 : AnimatedOpacity(
                                     opacity:
                                         percs.containsKey(index) ? 1.0 : 0.0,
@@ -1076,7 +1001,6 @@ class _HomePageState extends State<HomePage> {
                           onLongPress: () {
                             Vibration.vibrate(duration: 200);
 
-                            print(_showPreview);
                             BlocProvider.of<PostsCubit>(context)
                                 .viewphoto(true, allposts[index].photos![3][0]);
                             // setState(() {
@@ -1085,7 +1009,6 @@ class _HomePageState extends State<HomePage> {
                             // });
                           },
                           onLongPressUp: () {
-                            print(_showPreview);
                             BlocProvider.of<PostsCubit>(context)
                                 .viewphoto(false, "");
                             // setState(() {
@@ -1165,11 +1088,16 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   globals.usertype == "user"
                                       ? choice_loading
-                                          ? Center(
+                                          ? Positioned(
+                                              top: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.14,
                                               child: SpinKitDoubleBounce(
-                                              color: Colors.green,
-                                              size: 50.0,
-                                            ))
+                                                color: Colors.green,
+                                                size: 50.0,
+                                              ),
+                                            )
                                           : AnimatedOpacity(
                                               opacity: percs.containsKey(index)
                                                   ? 1.0
@@ -1242,9 +1170,7 @@ class _HomePageState extends State<HomePage> {
                   scrollDirection: Axis.vertical,
                   onPageChanged: (index) {
                     Page_View_Index = index;
-                    print(index);
                     if (index == allposts.length - 1) {
-                      print("ana fe el a5er");
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           duration: const Duration(seconds: 1),
@@ -1711,7 +1637,6 @@ class _HomePageState extends State<HomePage> {
             if (globals.usertype == "user") {
               var dtnow = DateTime.now();
               Duration dtdiff = dtnow.difference(last_refresh);
-              print(dtdiff.inSeconds);
               if (dtdiff.inSeconds >= 15) {
                 last_refresh = dtnow;
                 percs.clear();
@@ -1801,7 +1726,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _key = GlobalKey();
-    print(globals.usertype);
     return Scaffold(
       key: _key,
       floatingActionButton: Padding(

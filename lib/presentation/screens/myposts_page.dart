@@ -8,6 +8,7 @@ import '../../business_logic/cubit/posts_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../constants/my_colors.dart';
 import 'package:Prefer/constants/globals.dart' as globals;
+import 'package:vibration/vibration.dart';
 
 import 'package:flutter_offline/flutter_offline.dart';
 import '../../data/models/post.dart';
@@ -144,64 +145,63 @@ class _MyPostsPageState extends State<MyPostsPage> {
       child: Container(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
-          child: Container(
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(bottom: 130),
-                //   child: SpinKitFadingFour(
-                //     itemBuilder: (BuildContext context, int index) {
-                //       return DecoratedBox(
-                //         decoration: BoxDecoration(
-                //           color: index.isEven ? Colors.white : Colors.grey,
-                //         ),
-                //       );
-                //     },
-                //   ),
-                // ),
-                Column(
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.36,
-                      child: SizedBox.expand(
-                        child: FittedBox(
-                          child: CachedNetworkImage(
-                            imageUrl: '${myposts[index].photos![0][0]}',
-                            progressIndicatorBuilder:
-                                (context, url, downloadProgress) =>
-                                    Transform.scale(
-                                        scale: 0.1,
-                                        child: CircularProgressIndicator(
-                                            color: Colors.grey,
-                                            value: downloadProgress.progress)),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+          child: GestureDetector(
+            onLongPress: () {
+              Vibration.vibrate(duration: 200);
+
+              BlocProvider.of<PostsCubit>(context)
+                  .viewphoto(true, myposts[index].photos![0][0]);
+            },
+            onLongPressUp: () {
+              BlocProvider.of<PostsCubit>(context).viewphoto(false, "");
+            },
+            child: Container(
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.36,
+                        child: SizedBox.expand(
+                          child: FittedBox(
+                            child: CachedNetworkImage(
+                              imageUrl: '${myposts[index].photos![0][0]}',
+                              progressIndicatorBuilder: (context, url,
+                                      downloadProgress) =>
+                                  Transform.scale(
+                                      scale: 0.1,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.grey,
+                                          value: downloadProgress.progress)),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
+                            fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Container(
-                  child: Align(
-                      child: Text(
-                    "${myposts[index].photos![0][1]} % (${((int.parse(myposts[index].photos![0][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
-                    style: TextStyle(
-                        //fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontFamily: 'lone'),
-                  )),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height *
-                      0.36 *
-                      int.parse(myposts[index].photos![0][1]) /
-                      100,
-                  color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
-                )
-              ],
+                    ],
+                  ),
+                  Container(
+                    child: Align(
+                        child: Text(
+                      "${myposts[index].photos![0][1]} % (${((int.parse(myposts[index].photos![0][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
+                      style: TextStyle(
+                          //fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontFamily: 'lone'),
+                    )),
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height *
+                        0.36 *
+                        int.parse(myposts[index].photos![0][1]) /
+                        100,
+                    color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -216,58 +216,59 @@ class _MyPostsPageState extends State<MyPostsPage> {
       child: Container(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
-          child: Container(
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(bottom: 130),
-                //   child: SpinKitFadingFour(
-                //     itemBuilder: (BuildContext context, int index) {
-                //       return DecoratedBox(
-                //         decoration: BoxDecoration(
-                //           color: index.isEven ? Colors.white : Colors.grey,
-                //         ),
-                //       );
-                //     },
-                //   ),
-                // ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.36,
-                  child: SizedBox.expand(
-                    child: FittedBox(
-                      child: CachedNetworkImage(
-                        imageUrl: '${myposts[index].photos![1][0]}',
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) => Transform.scale(
-                                scale: 0.1,
-                                child: CircularProgressIndicator(
-                                    color: Colors.grey,
-                                    value: downloadProgress.progress)),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+          child: GestureDetector(
+            onLongPress: () {
+              Vibration.vibrate(duration: 200);
+
+              BlocProvider.of<PostsCubit>(context)
+                  .viewphoto(true, myposts[index].photos![1][0]);
+            },
+            onLongPressUp: () {
+              BlocProvider.of<PostsCubit>(context).viewphoto(false, "");
+            },
+            child: Container(
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.36,
+                    child: SizedBox.expand(
+                      child: FittedBox(
+                        child: CachedNetworkImage(
+                          imageUrl: '${myposts[index].photos![1][0]}',
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  Transform.scale(
+                                      scale: 0.1,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.grey,
+                                          value: downloadProgress.progress)),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
+                        fit: BoxFit.cover,
                       ),
-                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-                Container(
-                  child: Align(
-                      child: Text(
-                    "${myposts[index].photos![1][1]} % (${((int.parse(myposts[index].photos![1][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
-                    style: TextStyle(
-                        //fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontFamily: 'lone'),
-                  )),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height *
-                      0.36 *
-                      int.parse(myposts[index].photos![1][1]) /
-                      100,
-                  color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
-                )
-              ],
+                  Container(
+                    child: Align(
+                        child: Text(
+                      "${myposts[index].photos![1][1]} % (${((int.parse(myposts[index].photos![1][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
+                      style: TextStyle(
+                          //fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontFamily: 'lone'),
+                    )),
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height *
+                        0.36 *
+                        int.parse(myposts[index].photos![1][1]) /
+                        100,
+                    color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -289,75 +290,91 @@ class _MyPostsPageState extends State<MyPostsPage> {
                         child: Container(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
-                            child: Container(
-                              child: Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(bottom: 130),
-                                  //   child: SpinKitFadingFour(
-                                  //     itemBuilder:
-                                  //         (BuildContext context, int index) {
-                                  //       return DecoratedBox(
-                                  //         decoration: BoxDecoration(
-                                  //           color: index.isEven
-                                  //               ? Colors.white
-                                  //               : Colors.grey,
-                                  //         ),
-                                  //       );
-                                  //     },
-                                  //   ),
-                                  // ),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.34,
-                                        child: SizedBox.expand(
-                                          child: FittedBox(
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  '${myposts[index].photos![0][0]}',
-                                              progressIndicatorBuilder: (context,
-                                                      url, downloadProgress) =>
-                                                  Transform.scale(
-                                                      scale: 0.1,
-                                                      child: CircularProgressIndicator(
-                                                          color: Colors.grey,
-                                                          value:
-                                                              downloadProgress
-                                                                  .progress)),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Icon(Icons.error),
+                            child: GestureDetector(
+                              onLongPress: () {
+                                Vibration.vibrate(duration: 200);
+
+                                BlocProvider.of<PostsCubit>(context).viewphoto(
+                                    true, myposts[index].photos![0][0]);
+                              },
+                              onLongPressUp: () {
+                                BlocProvider.of<PostsCubit>(context)
+                                    .viewphoto(false, "");
+                              },
+                              child: Container(
+                                child: Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    // Padding(
+                                    //   padding: const EdgeInsets.only(bottom: 130),
+                                    //   child: SpinKitFadingFour(
+                                    //     itemBuilder:
+                                    //         (BuildContext context, int index) {
+                                    //       return DecoratedBox(
+                                    //         decoration: BoxDecoration(
+                                    //           color: index.isEven
+                                    //               ? Colors.white
+                                    //               : Colors.grey,
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //   ),
+                                    // ),
+                                    Column(
+                                      children: [
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.34,
+                                          child: SizedBox.expand(
+                                            child: FittedBox(
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    '${myposts[index].photos![0][0]}',
+                                                progressIndicatorBuilder: (context,
+                                                        url,
+                                                        downloadProgress) =>
+                                                    Transform.scale(
+                                                        scale: 0.1,
+                                                        child: CircularProgressIndicator(
+                                                            color: Colors.grey,
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress)),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error),
+                                              ),
+                                              fit: BoxFit.cover,
                                             ),
-                                            fit: BoxFit.cover,
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    child: Align(
-                                        child: Text(
-                                      "${myposts[index].photos![0][1]} % (${((int.parse(myposts[index].photos![0][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
-                                      style: TextStyle(
-                                          //fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontFamily: 'lone'),
-                                    )),
-                                    width: double.infinity,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.34 *
-                                        int.parse(
-                                            myposts[index].photos![0][1]) /
-                                        100,
-                                    color: Color.fromARGB(255, 13, 81, 1)
-                                        .withOpacity(0.3),
-                                  )
-                                ],
+                                      ],
+                                    ),
+                                    Container(
+                                      child: Align(
+                                          child: Text(
+                                        "${myposts[index].photos![0][1]} % (${((int.parse(myposts[index].photos![0][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
+                                        style: TextStyle(
+                                            //fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontFamily: 'lone'),
+                                      )),
+                                      width: double.infinity,
+                                      height: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                          0.34 *
+                                          int.parse(
+                                              myposts[index].photos![0][1]) /
+                                          100,
+                                      color: Color.fromARGB(255, 13, 81, 1)
+                                          .withOpacity(0.3),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -374,70 +391,86 @@ class _MyPostsPageState extends State<MyPostsPage> {
                         child: Container(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
-                            child: Container(
-                              child: Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(bottom: 130),
-                                  //   child: SpinKitFadingFour(
-                                  //     itemBuilder:
-                                  //         (BuildContext context, int index) {
-                                  //       return DecoratedBox(
-                                  //         decoration: BoxDecoration(
-                                  //           color: index.isEven
-                                  //               ? Colors.white
-                                  //               : Colors.grey,
-                                  //         ),
-                                  //       );
-                                  //     },
-                                  //   ),
-                                  // ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.34,
-                                    child: SizedBox.expand(
-                                      child: FittedBox(
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              '${myposts[index].photos![1][0]}',
-                                          progressIndicatorBuilder: (context,
-                                                  url, downloadProgress) =>
-                                              Transform.scale(
-                                                  scale: 0.1,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                          color: Colors.grey,
-                                                          value:
-                                                              downloadProgress
-                                                                  .progress)),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
+                            child: GestureDetector(
+                              onLongPress: () {
+                                Vibration.vibrate(duration: 200);
+
+                                BlocProvider.of<PostsCubit>(context).viewphoto(
+                                    true, myposts[index].photos![1][0]);
+                              },
+                              onLongPressUp: () {
+                                BlocProvider.of<PostsCubit>(context)
+                                    .viewphoto(false, "");
+                              },
+                              child: Container(
+                                child: Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    // Padding(
+                                    //   padding: const EdgeInsets.only(bottom: 130),
+                                    //   child: SpinKitFadingFour(
+                                    //     itemBuilder:
+                                    //         (BuildContext context, int index) {
+                                    //       return DecoratedBox(
+                                    //         decoration: BoxDecoration(
+                                    //           color: index.isEven
+                                    //               ? Colors.white
+                                    //               : Colors.grey,
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //   ),
+                                    // ),
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.34,
+                                      child: SizedBox.expand(
+                                        child: FittedBox(
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                '${myposts[index].photos![1][0]}',
+                                            progressIndicatorBuilder: (context,
+                                                    url, downloadProgress) =>
+                                                Transform.scale(
+                                                    scale: 0.1,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            color: Colors.grey,
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress)),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
+                                          ),
+                                          fit: BoxFit.cover,
                                         ),
-                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    child: Align(
-                                        child: Text(
-                                      "${myposts[index].photos![1][1]} % (${((int.parse(myposts[index].photos![1][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
-                                      style: TextStyle(
-                                          //fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontFamily: 'lone'),
-                                    )),
-                                    width: double.infinity,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.34 *
-                                        int.parse(
-                                            myposts[index].photos![1][1]) /
-                                        100,
-                                    color: Color.fromARGB(255, 13, 81, 1)
-                                        .withOpacity(0.3),
-                                  )
-                                ],
+                                    Container(
+                                      child: Align(
+                                          child: Text(
+                                        "${myposts[index].photos![1][1]} % (${((int.parse(myposts[index].photos![1][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
+                                        style: TextStyle(
+                                            //fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontFamily: 'lone'),
+                                      )),
+                                      width: double.infinity,
+                                      height: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                          0.34 *
+                                          int.parse(
+                                              myposts[index].photos![1][1]) /
+                                          100,
+                                      color: Color.fromARGB(255, 13, 81, 1)
+                                          .withOpacity(0.3),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -468,76 +501,16 @@ class _MyPostsPageState extends State<MyPostsPage> {
         child: Container(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Container(
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.only(bottom: 130),
-                  //   child: SpinKitFadingFour(
-                  //     itemBuilder: (BuildContext context, int index) {
-                  //       return DecoratedBox(
-                  //         decoration: BoxDecoration(
-                  //           color: index.isEven ? Colors.white : Colors.grey,
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.34,
-                    child: SizedBox.expand(
-                      child: FittedBox(
-                        child: CachedNetworkImage(
-                          imageUrl: '${myposts[index].photos![2][0]}',
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) =>
-                                  Transform.scale(
-                                      scale: 0.1,
-                                      child: CircularProgressIndicator(
-                                          color: Colors.grey,
-                                          value: downloadProgress.progress)),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: Align(
-                        child: Text(
-                      "${myposts[index].photos![2][1]} % (${((int.parse(myposts[index].photos![2][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
-                      style: TextStyle(
-                          //fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontFamily: 'lone'),
-                    )),
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height *
-                        0.34 *
-                        int.parse(myposts[index].photos![2][1]) /
-                        100,
-                    color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+            child: GestureDetector(
+              onLongPress: () {
+                Vibration.vibrate(duration: 200);
 
-  Widget First_Container_Second_Row(index) {
-    return Container(
-      child: Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+                BlocProvider.of<PostsCubit>(context)
+                    .viewphoto(true, myposts[index].photos![2][0]);
+              },
+              onLongPressUp: () {
+                BlocProvider.of<PostsCubit>(context).viewphoto(false, "");
+              },
               child: Container(
                 child: Stack(
                   alignment: Alignment.bottomCenter,
@@ -601,6 +574,88 @@ class _MyPostsPageState extends State<MyPostsPage> {
     );
   }
 
+  Widget First_Container_Second_Row(index) {
+    return Container(
+      child: Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: GestureDetector(
+                onLongPress: () {
+                  Vibration.vibrate(duration: 200);
+
+                  BlocProvider.of<PostsCubit>(context)
+                      .viewphoto(true, myposts[index].photos![2][0]);
+                },
+                onLongPressUp: () {
+                  BlocProvider.of<PostsCubit>(context).viewphoto(false, "");
+                },
+                child: Container(
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 130),
+                      //   child: SpinKitFadingFour(
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       return DecoratedBox(
+                      //         decoration: BoxDecoration(
+                      //           color: index.isEven ? Colors.white : Colors.grey,
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.34,
+                        child: SizedBox.expand(
+                          child: FittedBox(
+                            child: CachedNetworkImage(
+                              imageUrl: '${myposts[index].photos![2][0]}',
+                              progressIndicatorBuilder: (context, url,
+                                      downloadProgress) =>
+                                  Transform.scale(
+                                      scale: 0.1,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.grey,
+                                          value: downloadProgress.progress)),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Align(
+                            child: Text(
+                          "${myposts[index].photos![2][1]} % (${((int.parse(myposts[index].photos![2][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
+                          style: TextStyle(
+                              //fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontFamily: 'lone'),
+                        )),
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height *
+                            0.34 *
+                            int.parse(myposts[index].photos![2][1]) /
+                            100,
+                        color: Color.fromARGB(255, 13, 81, 1).withOpacity(0.3),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget Second_Row_Two_Images_Widget(index) {
     return Stack(
       children: [
@@ -620,70 +675,86 @@ class _MyPostsPageState extends State<MyPostsPage> {
                         child: Container(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
-                            child: Container(
-                              child: Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(bottom: 130),
-                                  //   child: SpinKitFadingFour(
-                                  //     itemBuilder:
-                                  //         (BuildContext context, int index) {
-                                  //       return DecoratedBox(
-                                  //         decoration: BoxDecoration(
-                                  //           color: index.isEven
-                                  //               ? Colors.white
-                                  //               : Colors.grey,
-                                  //         ),
-                                  //       );
-                                  //     },
-                                  //   ),
-                                  // ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.34,
-                                    child: SizedBox.expand(
-                                      child: FittedBox(
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              '${myposts[index].photos![3][0]}',
-                                          progressIndicatorBuilder: (context,
-                                                  url, downloadProgress) =>
-                                              Transform.scale(
-                                                  scale: 0.1,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                          color: Colors.grey,
-                                                          value:
-                                                              downloadProgress
-                                                                  .progress)),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
+                            child: GestureDetector(
+                              onLongPress: () {
+                                Vibration.vibrate(duration: 200);
+
+                                BlocProvider.of<PostsCubit>(context).viewphoto(
+                                    true, myposts[index].photos![3][0]);
+                              },
+                              onLongPressUp: () {
+                                BlocProvider.of<PostsCubit>(context)
+                                    .viewphoto(false, "");
+                              },
+                              child: Container(
+                                child: Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    // Padding(
+                                    //   padding: const EdgeInsets.only(bottom: 130),
+                                    //   child: SpinKitFadingFour(
+                                    //     itemBuilder:
+                                    //         (BuildContext context, int index) {
+                                    //       return DecoratedBox(
+                                    //         decoration: BoxDecoration(
+                                    //           color: index.isEven
+                                    //               ? Colors.white
+                                    //               : Colors.grey,
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //   ),
+                                    // ),
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.34,
+                                      child: SizedBox.expand(
+                                        child: FittedBox(
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                '${myposts[index].photos![3][0]}',
+                                            progressIndicatorBuilder: (context,
+                                                    url, downloadProgress) =>
+                                                Transform.scale(
+                                                    scale: 0.1,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            color: Colors.grey,
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress)),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
+                                          ),
+                                          fit: BoxFit.cover,
                                         ),
-                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    child: Align(
-                                        child: Text(
-                                      "${myposts[index].photos![3][1]} % (${((int.parse(myposts[index].photos![3][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
-                                      style: TextStyle(
-                                          //fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontFamily: 'lone'),
-                                    )),
-                                    width: double.infinity,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.34 *
-                                        int.parse(
-                                            myposts[index].photos![3][1]) /
-                                        100,
-                                    color: Color.fromARGB(255, 13, 81, 1)
-                                        .withOpacity(0.3),
-                                  )
-                                ],
+                                    Container(
+                                      child: Align(
+                                          child: Text(
+                                        "${myposts[index].photos![3][1]} % (${((int.parse(myposts[index].photos![3][1]) / 100) * (myposts[index].totalAnswers!)).toInt()})",
+                                        style: TextStyle(
+                                            //fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontFamily: 'lone'),
+                                      )),
+                                      width: double.infinity,
+                                      height: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                          0.34 *
+                                          int.parse(
+                                              myposts[index].photos![3][1]) /
+                                          100,
+                                      color: Color.fromARGB(255, 13, 81, 1)
+                                          .withOpacity(0.3),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -794,83 +865,68 @@ class _MyPostsPageState extends State<MyPostsPage> {
                     }
                   },
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onLongPress: () {
-                        if (myposts[index].hidden == true) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            duration: const Duration(seconds: 1),
-                            content: Text(AppLocalizations.of(context)!
-                                .translate("Post period already ended")),
-                            backgroundColor: Colors.grey.withOpacity(0.5),
-                          ));
-                        } else {
-                          Delete_Dialog(index);
-                        }
-                      },
-                      child: Card(
-                        color: globals.theme_mode == ThemeMode.dark
-                            ? Colors.black
-                            : Colors.white,
-                        child: SingleChildScrollView(
-                          physics: NeverScrollableScrollPhysics(),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                    padding: EdgeInsets.fromLTRB(17, 20, 17, 0),
-                                    child: Wrap(
-                                      children: [
-                                        Text(
-                                          "${myposts[index].description}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: globals.theme_mode ==
-                                                    ThemeMode.dark
-                                                ? Colors.white
-                                                : Colors.black,
-                                          ),
+                    return Card(
+                      color: globals.theme_mode == ThemeMode.dark
+                          ? Colors.black
+                          : Colors.white,
+                      child: SingleChildScrollView(
+                        physics: NeverScrollableScrollPhysics(),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(17, 20, 17, 0),
+                                  child: Wrap(
+                                    children: [
+                                      Text(
+                                        "${myposts[index].description}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: globals.theme_mode ==
+                                                  ThemeMode.dark
+                                              ? Colors.white
+                                              : Colors.black,
                                         ),
-                                      ],
-                                    )),
-                                First_Row_Two_Images_Widget(index),
-                                Second_Row_Two_Images_Widget(index),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  child: RawMaterialButton(
-                                    onPressed: () {
-                                      if (myposts[index].hidden == true) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                          duration: const Duration(seconds: 1),
-                                          content: Text(AppLocalizations.of(
-                                                  context)!
-                                              .translate(
-                                                  "Post period already ended")),
-                                          backgroundColor:
-                                              Colors.grey.withOpacity(0.5),
-                                        ));
-                                      } else {
-                                        Delete_Dialog(index);
-                                      }
-                                    },
-                                    constraints:
-                                        BoxConstraints.tight(Size(36, 36)),
-                                    elevation: 2.0,
-                                    fillColor:
-                                        globals.theme_mode == ThemeMode.dark
-                                            ? main_color.withOpacity(0.5)
-                                            : main_color,
-                                    child: Icon(
-                                      Icons.delete,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                                    shape: CircleBorder(),
+                                      ),
+                                    ],
+                                  )),
+                              First_Row_Two_Images_Widget(index),
+                              Second_Row_Two_Images_Widget(index),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                child: RawMaterialButton(
+                                  onPressed: () {
+                                    if (myposts[index].hidden == true) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        duration: const Duration(seconds: 1),
+                                        content: Text(AppLocalizations.of(
+                                                context)!
+                                            .translate(
+                                                "Post period already ended")),
+                                        backgroundColor:
+                                            Colors.grey.withOpacity(0.5),
+                                      ));
+                                    } else {
+                                      Delete_Dialog(index);
+                                    }
+                                  },
+                                  constraints:
+                                      BoxConstraints.tight(Size(36, 36)),
+                                  elevation: 2.0,
+                                  fillColor:
+                                      globals.theme_mode == ThemeMode.dark
+                                          ? main_color.withOpacity(0.5)
+                                          : main_color,
+                                  child: Icon(
+                                    Icons.delete,
+                                    size: 20,
+                                    color: Colors.white,
                                   ),
+                                  shape: CircleBorder(),
                                 ),
-                              ]),
-                        ),
+                              ),
+                            ]),
                       ),
                     );
                   }),

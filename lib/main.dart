@@ -82,9 +82,7 @@ class PreferApp extends StatelessWidget {
             routes: {
               homePageScreen: (context) => BlocProvider(
                     create: (context) => PostsCubit(postsRepo(postsApis())),
-                    child: HomePage(
-                      usertype: main_user.sId == null ? "guest" : "user",
-                    ),
+                    child: HomePage(),
                   ),
               boardingScreen: (context) => Onboarding(),
               loginScreen: (context) => BlocProvider(

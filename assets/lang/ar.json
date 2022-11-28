@@ -57,5 +57,6 @@
     "Blocked":"ممنوع من النشر",
     "Yes":"نعم",
     "No":"لا",
-    "Can't upload more than 4 photos":"لا يمكن تحميل أكثر من 4 صور"
+    "Can't upload more than 4 photos":"لا يمكن تحميل أكثر من 4 صور",
+    "Username can't contain spaces":"اسم المستخدم لا يمكن أن يحتوي على مسافات"
 }

@@ -57,5 +57,6 @@
     "Blocked":"Blocked",
     "Yes":"Yes",
     "No":"No",
-    "Can't upload more than 4 photos":"Can't upload more than 4 photos"
+    "Can't upload more than 4 photos":"Can't upload more than 4 photos",
+    "Username can't contain spaces":"Username can't contain spaces"
 }

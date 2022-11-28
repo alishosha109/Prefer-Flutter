@@ -91,6 +91,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     } else if (value.length < 8) {
                       return AppLocalizations.of(context)!
                           .translate('Username must be more than 8 characters');
+                    } else if (value.contains(" ")) {
+                      return AppLocalizations.of(context)!
+                          .translate("Username can't contain spaces");
                     }
                     return null;
                   },
