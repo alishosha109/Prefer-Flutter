@@ -15,9 +15,9 @@ class usersRepo {
   }
 
   Future<dynamic> Sign_up(
-      username, password, phone_number, birthdate, gender) async {
+      username, password, phone_number, birthdate, gender, amount) async {
     var response = await usersapis.Sign_up(
-        username, password, phone_number, birthdate, gender);
+        username, password, phone_number, birthdate, gender, amount);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       var access_t = response.data['token'];
@@ -60,5 +60,20 @@ class usersRepo {
     } else {
       return [];
     }
+  }
+
+  Future<dynamic> check_promo(
+    promocode,
+  ) async {
+    var response = await usersapis.check_promo(
+      promocode,
+    );
+    var amount;
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      amount = response.data['amount'];
+    } else {
+      amount = null;
+    }
+    return amount;
   }
 }

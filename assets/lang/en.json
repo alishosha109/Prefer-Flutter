@@ -58,5 +58,7 @@
     "Yes":"Yes",
     "No":"No",
     "Can't upload more than 4 photos":"Can't upload more than 4 photos",
-    "Username can't contain spaces":"Username can't contain spaces"
+    "Username can't contain spaces":"Username can't contain spaces",
+    "Promo Code":"Promo Code",
+    "Promo code is not valid, Do you wish to continue?":"Promo code is not valid, Do you wish to continue?"
 }

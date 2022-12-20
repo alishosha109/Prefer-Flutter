@@ -27,6 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
   bool show_pass = false;
   var pass1;
   var username;
+  var promocode;
   var phone_number;
   var birthdate;
   var choosed_gender = "male";
@@ -35,6 +36,61 @@ class _SignUpPageState extends State<SignUpPage> {
   var loading = false;
   var error_message = "";
   bool isInteger(num value) => value is int || value == value.roundToDouble();
+
+  promoCode_dialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: globals.theme_mode == ThemeMode.dark
+            ? Colors.black87
+            : Colors.white,
+        content: Text(
+          AppLocalizations.of(context)!
+              .translate("Promo code is not valid, Do you wish to continue?"),
+          style: TextStyle(
+            color: globals.theme_mode == ThemeMode.dark
+                ? Colors.white
+                : Colors.black,
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Color(0xffA9A9A9),
+              padding: const EdgeInsets.all(14),
+              child: Text(
+                AppLocalizations.of(context)!.translate("No"),
+                style: TextStyle(color: MyColors.mywhite),
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              BlocProvider.of<UsersCubit>(context).Sign_up(
+                username,
+                pass1,
+                phone_number,
+                birthdate.toString(),
+                choosed_gender,
+                false,
+              );
+            },
+            child: Container(
+              color: MyColors.myRed,
+              padding: const EdgeInsets.all(14),
+              child: Text(
+                AppLocalizations.of(context)!.translate("Yes"),
+                style: TextStyle(color: MyColors.mywhite),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget bloc_child_widget() {
     return SingleChildScrollView(
@@ -311,6 +367,27 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
+                TextFormField(
+                  textCapitalization: TextCapitalization.characters,
+                  style: TextStyle(color: Colors.black),
+                  onSaved: (value) {
+                    promocode = value;
+                  },
+                  decoration: InputDecoration(
+                      hintText:
+                          AppLocalizations.of(context)!.translate("Promo Code"),
+                      hintStyle: TextStyle(fontSize: 14, color: Colors.black),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1, color: Colors.black)),
+                      prefixIcon: Icon(
+                        Icons.subscriptions,
+                        color: Colors.black,
+                      )),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
                 Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: GenderPickerWithImage(
@@ -358,12 +435,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               );
                             } else {
                               _formKey.currentState!.save();
-                              BlocProvider.of<UsersCubit>(context).Sign_up(
-                                  username,
-                                  pass1,
-                                  phone_number,
-                                  birthdate.toString(),
-                                  choosed_gender);
+                              BlocProvider.of<UsersCubit>(context).check_promo(
+                                promocode,
+                              );
                             }
                           }
                         }
@@ -485,6 +559,18 @@ class _SignUpPageState extends State<SignUpPage> {
           homePageScreen,
         );
       }
+      if (state is usersignupcompleteWithPromo) {
+        await determinePosition();
+        globals.save_tokens_to_globals();
+        globals.saveUser();
+        globals.usertype = "user";
+        // Navigator.of(context)
+        //     .pushReplacementNamed(homePageScreen, arguments: "user");
+        Navigator.pushReplacementNamed(
+          context,
+          homePageScreen,
+        );
+      }
       if (state is usersignuperror) {
         signed = (state).signed;
         error_message = (state).message;
@@ -495,6 +581,14 @@ class _SignUpPageState extends State<SignUpPage> {
       }
       if (state is userloading) {
         loading = state.loading;
+      }
+      if (state is promocode_valid) {
+        BlocProvider.of<UsersCubit>(context).Sign_up(username, pass1,
+            phone_number, birthdate.toString(), choosed_gender, true,
+            amount: state.amount);
+      }
+      if (state is promocode_notvalid) {
+        promoCode_dialog();
       }
     }, builder: (context, state) {
       return bloc_child_widget();

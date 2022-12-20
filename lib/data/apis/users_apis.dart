@@ -32,7 +32,7 @@ class usersApis {
   }
 
   Future<dynamic> Sign_up(
-      username, password, phone_number, birthdate, gender) async {
+      username, password, phone_number, birthdate, gender, amount) async {
     final fcmToken = await FirebaseMessaging.instance.getToken();
 
     var response = await dio.post(
@@ -43,7 +43,8 @@ class usersApis {
         'phone_number': phone_number,
         'birthdate': birthdate,
         'gender': gender,
-        'fcm': fcmToken
+        'fcm': fcmToken,
+        'subscription': amount
       },
     );
     return response;
@@ -89,6 +90,31 @@ class usersApis {
   Future<dynamic> updateFCM(fcm) async {
     var response;
     response = await dio.patch('users/${main_user.sId}', data: {'fcm': fcm});
+    return response;
+  }
+
+  Future<dynamic> check_promo(
+    promocode,
+  ) async {
+    var response = await dio.post(
+      'promos/checkpromo',
+      queryParameters: {
+        'code': promocode,
+      },
+    );
+    return response;
+  }
+
+  Future<dynamic> update_subscription(
+    amount,
+    user_id,
+  ) async {
+    var response = await dio.patch(
+      'users/$user_id',
+      data: {
+        'subscription': amount,
+      },
+    );
     return response;
   }
 }

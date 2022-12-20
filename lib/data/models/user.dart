@@ -2,6 +2,7 @@ class User {
   String? sId;
   String? username;
   String? phoneNumber;
+  int? subscription;
   bool? blocked;
   int? reports;
   String? error;
@@ -11,6 +12,7 @@ class User {
     sId = json['_id'];
     username = json['username'];
     phoneNumber = json['phone_number'];
+    subscription = json['subscription'];
     blocked = json['blocked'];
     reports = json['reports'];
   }
@@ -22,6 +24,7 @@ class User {
     data['phone_number'] = this.phoneNumber;
     data['blocked'] = this.blocked;
     data['reports'] = this.reports;
+    data['subscription'] = this.subscription;
     return data;
   }
 

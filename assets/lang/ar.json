@@ -58,5 +58,7 @@
     "Yes":"نعم",
     "No":"لا",
     "Can't upload more than 4 photos":"لا يمكن تحميل أكثر من 4 صور",
-    "Username can't contain spaces":"اسم المستخدم لا يمكن أن يحتوي على مسافات"
+    "Username can't contain spaces":"اسم المستخدم لا يمكن أن يحتوي على مسافات",
+    "PromoCode" : "الرمز الترويجي",
+    "Promo code is not valid, Do you wish to continue?":"الرمز الترويجي غير صالح ، هل ترغب في الاستمرار؟"
 }

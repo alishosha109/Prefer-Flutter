@@ -18,6 +18,13 @@ class usersignupcomplete extends UsersState {
   usersignupcomplete(this.user, this.signed);
 }
 
+class usersignupcompleteWithPromo extends UsersState {
+  final User user;
+  final bool signed;
+  final int amount;
+  usersignupcompleteWithPromo(this.user, this.signed, this.amount);
+}
+
 class usersignuperror extends UsersState {
   final String message;
   final bool signed;
@@ -47,4 +54,14 @@ class usersigninerror extends UsersState {
 class numbersloaded extends UsersState {
   final List values;
   numbersloaded(this.values);
+}
+
+class promocode_valid extends UsersState {
+  final int amount;
+
+  promocode_valid(this.amount);
+}
+
+class promocode_notvalid extends UsersState {
+  promocode_notvalid();
 }

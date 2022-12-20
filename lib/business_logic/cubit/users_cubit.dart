@@ -32,9 +32,12 @@ class UsersCubit extends Cubit<UsersState> {
     });
   }
 
-  dynamic Sign_up(username, password, phone_number, birthdate, gender) {
+  dynamic Sign_up(
+      username, password, phone_number, birthdate, gender, promovalid,
+      {amount: 0}) {
     emit(userloading(true));
-    usersrepo.Sign_up(username, password, phone_number, birthdate, gender)
+    usersrepo.Sign_up(
+            username, password, phone_number, birthdate, gender, amount)
         .then((user) async {
       if (user.error == null) {
         await delete_all_prefs(user.sId);
@@ -43,7 +46,11 @@ class UsersCubit extends Cubit<UsersState> {
         await change_first();
         await save_id_stay_signed(user.sId);
         get_all_prefs(user.sId);
-        emit(usersignupcomplete(user, true));
+        if (promovalid) {
+          emit(usersignupcompleteWithPromo(user, true, amount));
+        } else {
+          emit(usersignupcomplete(user, true));
+        }
         this.user = user;
       } else {
         emit(usersignuperror(user.error, false, false));
@@ -143,5 +150,20 @@ class UsersCubit extends Cubit<UsersState> {
           else
             {emit(numbersloaded(values))}
         });
+  }
+
+  Future<dynamic> check_promo(
+    promocode,
+  ) async {
+    usersrepo
+        .check_promo(
+          promocode,
+        )
+        .then((result) => {
+              if (result != null)
+                {emit(promocode_valid(result))}
+              else
+                {emit(promocode_notvalid())}
+            });
   }
 }
