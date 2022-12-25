@@ -14,8 +14,8 @@ class usersLoaded extends UsersState {
 class usersignupcomplete extends UsersState {
   final User user;
   final bool signed;
-
-  usersignupcomplete(this.user, this.signed);
+  final int amount;
+  usersignupcomplete(this.user, this.signed, this.amount);
 }
 
 class usersignupcompleteWithPromo extends UsersState {

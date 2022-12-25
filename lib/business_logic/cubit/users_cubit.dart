@@ -49,7 +49,7 @@ class UsersCubit extends Cubit<UsersState> {
         if (promovalid) {
           emit(usersignupcompleteWithPromo(user, true, amount));
         } else {
-          emit(usersignupcomplete(user, true));
+          emit(usersignupcomplete(user, true, amount));
         }
         this.user = user;
       } else {
@@ -155,6 +155,7 @@ class UsersCubit extends Cubit<UsersState> {
   Future<dynamic> check_promo(
     promocode,
   ) async {
+    emit(userloading(true));
     usersrepo
         .check_promo(
           promocode,

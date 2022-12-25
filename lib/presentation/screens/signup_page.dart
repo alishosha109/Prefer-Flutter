@@ -35,6 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
   late User user;
   var signed;
   var loading = false;
+  var valid_promo = false;
   var error_message = "";
   bool isInteger(num value) => value is int || value == value.roundToDouble();
 
@@ -71,9 +72,10 @@ class _SignUpPageState extends State<SignUpPage> {
           : 'Congratulations for your subscription',
       // btnCancelOnPress: () {},
       btnOkOnPress: () {
-        BlocProvider.of<UsersCubit>(context).Sign_up(username, pass1,
-            phone_number, birthdate.toString(), choosed_gender, true,
-            amount: amount);
+        Navigator.pushReplacementNamed(
+          context,
+          homePageScreen,
+        );
       },
     )..show();
   }
@@ -374,6 +376,21 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
+                valid_promo
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Valid Promocode",
+                            style: TextStyle(color: Colors.green, fontSize: 12),
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
                 Padding(
                   padding: EdgeInsets.only(left: 20),
                   child: GenderPickerWithImage(
@@ -550,12 +567,13 @@ class _SignUpPageState extends State<SignUpPage> {
         globals.save_tokens_to_globals();
         globals.saveUser();
         globals.usertype = "user";
-        // Navigator.of(context)
-        //     .pushReplacementNamed(homePageScreen, arguments: "user");
         Navigator.pushReplacementNamed(
           context,
           homePageScreen,
         );
+        // Navigator.of(context)
+        //     .pushReplacementNamed(homePageScreen, arguments: "user");
+
       }
       if (state is usersignupcompleteWithPromo) {
         await determinePosition();
@@ -564,10 +582,7 @@ class _SignUpPageState extends State<SignUpPage> {
         globals.usertype = "user";
         // Navigator.of(context)
         //     .pushReplacementNamed(homePageScreen, arguments: "user");
-        Navigator.pushReplacementNamed(
-          context,
-          homePageScreen,
-        );
+        ValidpromoCode_dialog(state.amount);
       }
       if (state is usersignuperror) {
         signed = (state).signed;
@@ -581,12 +596,15 @@ class _SignUpPageState extends State<SignUpPage> {
         loading = state.loading;
       }
       if (state is promocode_valid) {
-        ValidpromoCode_dialog(state.amount);
-        // BlocProvider.of<UsersCubit>(context).Sign_up(username, pass1,
-        //     phone_number, birthdate.toString(), choosed_gender, true,
-        //     amount: state.amount);
+        valid_promo = true;
+
+        BlocProvider.of<UsersCubit>(context).Sign_up(username, pass1,
+            phone_number, birthdate.toString(), choosed_gender, true,
+            amount: state.amount);
       }
       if (state is promocode_notvalid) {
+        valid_promo = false;
+        loading = false;
         NotValidpromoCode_dialog();
       }
     }, builder: (context, state) {
